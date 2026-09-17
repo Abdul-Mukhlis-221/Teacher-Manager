@@ -1,0 +1,4442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>LYZZ Teacher Manager</title>
+
+<style>
+:root{
+    --bg:#f4f6fb;
+    --card:#fff;
+    --text:#182033;
+    --muted:#718096;
+    --border:#e6e9f0;
+    --primary:#635bff;
+    --primary2:#5146e5;
+    --success:#16a34a;
+    --warning:#d97706;
+    --danger:#dc2626;
+    --info:#0284c7;
+    --sidebar:#111827;
+    --sidebar2:#1f2937;
+    --shadow:0 8px 28px rgba(15,23,42,.07);
+    --radius:16px;
+}
+
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+
+.app{min-height:100vh}
+
+.sidebar{
+    position:fixed;
+    inset:0 auto 0 0;
+    width:250px;
+    background:var(--sidebar);
+    color:white;
+    padding:20px 15px;
+    z-index:20;
+    overflow-y:auto;
+}
+
+.brand{
+    padding:8px 10px 22px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.brand-title{
+    font-size:21px;
+    font-weight:800;
+}
+
+.brand-sub{
+    color:#a5b4fc;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.nav{
+    margin-top:18px;
+    display:grid;
+    gap:5px;
+}
+
+.nav button{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#cbd5e1;
+    text-align:left;
+    padding:11px 12px;
+    border-radius:10px;
+    transition:.15s;
+}
+
+.nav button:hover,
+.nav button.active{
+    background:var(--sidebar2);
+    color:#fff;
+}
+
+.main{
+    margin-left:250px;
+    min-height:100vh;
+    padding:24px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.title h1{
+    margin:0;
+    font-size:26px;
+}
+
+.title p{
+    margin:5px 0 0;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:0;
+    padding:10px 14px;
+    border-radius:10px;
+    background:#eef1f7;
+    color:var(--text);
+    font-weight:650;
+}
+
+.btn:hover{filter:brightness(.97)}
+.btn.primary{background:var(--primary);color:#fff}
+.btn.primary:hover{background:var(--primary2)}
+.btn.success{background:#dcfce7;color:#166534}
+.btn.warning{background:#fef3c7;color:#92400e}
+.btn.danger{background:#fee2e2;color:#991b1b}
+.btn.info{background:#e0f2fe;color:#075985}
+.btn.small{padding:7px 9px;font-size:12px}
+
+.page{display:none}
+.page.active{display:block}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.stat{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px;
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    border-radius:11px;
+    background:#eef2ff;
+    margin-bottom:12px;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.stat-value{
+    font-size:27px;
+    font-weight:800;
+    margin-top:5px;
+}
+
+.stat-extra{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:5px;
+}
+
+.panel{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px;
+    margin-top:17px;
+}
+
+.panel-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.panel-head h2{
+    margin:0;
+    font-size:17px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.class-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px;
+}
+
+.class-card h3{
+    margin:10px 0 5px;
+}
+
+.class-card p{
+    margin:5px 0;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:30px;
+    background:#eef2ff;
+    color:#4f46e5;
+    font-size:11px;
+    font-weight:700;
+}
+
+.badge.success{background:#dcfce7;color:#166534}
+.badge.warning{background:#fef3c7;color:#92400e}
+.badge.danger{background:#fee2e2;color:#991b1b}
+.badge.info{background:#e0f2fe;color:#075985}
+
+.table-wrap{overflow:auto}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+th,td{
+    padding:11px 10px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    color:var(--muted);
+    font-size:11px;
+    text-transform:uppercase;
+    white-space:nowrap;
+}
+
+.empty{
+    text-align:center;
+    padding:40px 20px;
+    color:var(--muted);
+}
+
+.empty-icon{
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+input,select,textarea{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    padding:10px 11px;
+    border-radius:10px;
+    outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(99,91,255,.08);
+}
+
+.filters input,
+.filters select{
+    max-width:260px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.field{
+    display:grid;
+    gap:6px;
+}
+
+.field.full{grid-column:1/-1}
+
+label{
+    font-size:12px;
+    font-weight:700;
+}
+
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(0,0,0,.55);
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.modal.show{display:flex}
+
+.modal-box{
+    width:min(650px,100%);
+    max-height:92vh;
+    overflow:auto;
+    background:var(--card);
+    border-radius:18px;
+    padding:20px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.modal-head h2{margin:0;font-size:19px}
+
+.close{
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    font-size:27px;
+}
+
+.modal-foot{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:20px;
+}
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:17px;
+}
+
+.quick{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.quick button{
+    border:1px solid var(--border);
+    background:var(--card);
+    border-radius:12px;
+    padding:14px;
+    text-align:left;
+    color:var(--text);
+}
+
+.quick button:hover{border-color:var(--primary)}
+
+.progress{
+    height:8px;
+    background:#e5e7eb;
+    border-radius:99px;
+    overflow:hidden;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:var(--primary);
+}
+
+.chart{
+    display:flex;
+    align-items:end;
+    gap:8px;
+    height:160px;
+    padding-top:15px;
+}
+
+.bar{
+    flex:1;
+    min-width:15px;
+    background:linear-gradient(180deg,#8178ff,#635bff);
+    border-radius:7px 7px 0 0;
+    position:relative;
+}
+
+.bar small{
+    position:absolute;
+    bottom:-20px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:9px;
+    color:var(--muted);
+}
+
+.bar b{
+    position:absolute;
+    top:-17px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:9px;
+}
+
+.notice{
+    padding:12px 14px;
+    border-radius:11px;
+    background:#f8fafc;
+    border:1px solid var(--border);
+    margin-bottom:9px;
+}
+
+.notice strong{display:block}
+.notice small{color:var(--muted)}
+
+.profile-box{
+    display:grid;
+    grid-template-columns:100px 1fr;
+    gap:20px;
+    align-items:center;
+}
+
+.avatar{
+    width:90px;
+    height:90px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--primary),#9b8cff);
+    color:white;
+    font-size:32px;
+    font-weight:800;
+}
+
+.kpi{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.kpi-box{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+}
+
+.kpi-box small{
+    color:var(--muted);
+    display:block;
+}
+
+.kpi-box strong{
+    font-size:20px;
+    display:block;
+    margin-top:5px;
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#111827;
+    color:#fff;
+    padding:12px 16px;
+    border-radius:11px;
+    z-index:200;
+    transform:translateY(20px);
+    opacity:0;
+    pointer-events:none;
+    transition:.2s;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+.mobile-menu{
+    display:none;
+}
+
+@media(max-width:1000px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .dashboard-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:700px){
+    .sidebar{
+        position:static;
+        width:100%;
+        padding:13px;
+    }
+
+    .brand{padding-bottom:13px}
+
+    .nav{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .nav button{
+        font-size:11px;
+        padding:9px 6px;
+        text-align:center;
+    }
+
+    .main{
+        margin-left:0;
+        padding:14px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .grid,.cards,.form-grid,.kpi{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{grid-column:auto}
+
+    .quick{grid-template-columns:1fr}
+
+    .profile-box{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .avatar{margin:auto}
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+    <div class="brand">
+        <div class="brand-title">LYZZ Teacher Manager</div>
+        <div class="brand-sub">Sistem Manajemen Guru Offline</div>
+    </div>
+
+    <nav class="nav">
+        <button class="active" data-page="dashboard">🏠<br>Dashboard</button>
+        <button data-page="kelas">🏫<br>Kelas</button>
+        <button data-page="siswa">👨‍🎓<br>Siswa</button>
+        <button data-page="absensi">📋<br>Absensi</button>
+        <button data-page="nilai">📊<br>Nilai</button>
+        <button data-page="tugas">📝<br>Tugas</button>
+        <button data-page="jadwal">🗓️<br>Jadwal</button>
+        <button data-page="laporan">📑<br>Laporan</button>
+        <button data-page="profil">👤<br>Profil</button>
+        <button data-page="catatan">📌<br>Catatan</button>
+        <button data-page="backup">💾<br>Backup</button>
+    </nav>
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+    <div class="title">
+        <h1 id="pageTitle">Dashboard</h1>
+        <p id="pageSub">Ringkasan kegiatan mengajar</p>
+    </div>
+
+    <div class="actions">
+        <button class="btn" id="themeBtn">🌙 Tema</button>
+    </div>
+</header>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+
+    <div class="grid">
+
+        <div class="stat">
+            <div class="stat-icon">🏫</div>
+            <div class="stat-label">Total Kelas</div>
+            <div class="stat-value" id="statClasses">0</div>
+            <div class="stat-extra">Kelas terdaftar</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">👨‍🎓</div>
+            <div class="stat-label">Total Siswa</div>
+            <div class="stat-value" id="statStudents">0</div>
+            <div class="stat-extra">Siswa terdaftar</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">📝</div>
+            <div class="stat-label">Tugas Aktif</div>
+            <div class="stat-value" id="statTasks">0</div>
+            <div class="stat-extra">Belum melewati deadline</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">📊</div>
+            <div class="stat-label">Rata-rata Nilai</div>
+            <div class="stat-value" id="statAvg">0</div>
+            <div class="stat-extra">Dari semua nilai</div>
+        </div>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="panel">
+            <div class="panel-head">
+                <h2>📈 Statistik Nilai</h2>
+            </div>
+            <div id="scoreChart"></div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-head">
+                <h2>⚡ Aksi Cepat</h2>
+            </div>
+
+            <div class="quick">
+                <button onclick="openModal('class')">🏫<br><b>Tambah Kelas</b></button>
+                <button onclick="openModal('student')">👨‍🎓<br><b>Tambah Siswa</b></button>
+                <button onclick="openModal('grade')">📊<br><b>Input Nilai</b></button>
+                <button onclick="openModal('task')">📝<br><b>Buat Tugas</b></button>
+                <button onclick="openModal('schedule')">🗓️<br><b>Tambah Jadwal</b></button>
+                <button onclick="showPage('absensi')">📋<br><b>Isi Absensi</b></button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="panel">
+            <div class="panel-head">
+                <h2>📝 Tugas Terdekat</h2>
+            </div>
+            <div id="dashboardTasks"></div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-head">
+                <h2>🗓️ Jadwal Mendatang</h2>
+            </div>
+            <div id="dashboardSchedule"></div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- KELAS -->
+<section id="kelas" class="page">
+    <div class="panel">
+        <div class="panel-head">
+            <h2>Daftar Kelas</h2>
+            <button class="btn primary" onclick="openModal('class')">＋ Tambah Kelas</button>
+        </div>
+        <div id="classCards" class="cards"></div>
+    </div>
+</section>
+
+<!-- SISWA -->
+<section id="siswa" class="page">
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>Data Siswa</h2>
+            <button class="btn primary" onclick="openModal('student')">＋ Tambah Siswa</button>
+        </div>
+
+        <div class="filters">
+            <input id="studentSearch" placeholder="🔎 Cari nama / NIS..." oninput="renderStudents()">
+            <select id="studentClassFilter" onchange="renderStudents()">
+                <option value="">Semua kelas</option>
+            </select>
+            <select id="studentGenderFilter" onchange="renderStudents()">
+                <option value="">Semua gender</option>
+                <option value="L">Laki-laki</option>
+                <option value="P">Perempuan</option>
+            </select>
+        </div>
+
+        <div id="studentsTable" class="table-wrap"></div>
+    </div>
+</section>
+
+<!-- ABSENSI -->
+<section id="absensi" class="page">
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>Absensi Harian</h2>
+            <button class="btn success" onclick="exportAttendance()">⬇ Export Absensi</button>
+        </div>
+
+        <div class="filters">
+            <select id="attClass" onchange="renderAttendance()"></select>
+            <input type="date" id="attDate" onchange="renderAttendance()">
+        </div>
+
+        <div id="attendanceSummary"></div>
+        <div id="attendanceTable" class="table-wrap"></div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-head">
+            <h2>📋 Rekap Kehadiran</h2>
+        </div>
+        <div id="attendanceReport" class="table-wrap"></div>
+    </div>
+</section>
+
+<!-- NILAI -->
+<section id="nilai" class="page">
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>Data Nilai</h2>
+            <div class="actions">
+                <button class="btn" onclick="openWeightModal()">⚙ Bobot</button>
+                <button class="btn primary" onclick="openModal('grade')">＋ Tambah Nilai</button>
+            </div>
+        </div>
+
+        <div class="filters">
+            <input id="gradeSearch" placeholder="🔎 Cari siswa..." oninput="renderGrades()">
+            <select id="gradeKindFilter" onchange="renderGrades()">
+                <option value="">Semua jenis</option>
+                <option>Tugas</option>
+                <option>Quiz</option>
+                <option>UTS</option>
+                <option>UAS</option>
+                <option>Praktik</option>
+            </select>
+        </div>
+
+        <div id="gradesTable" class="table-wrap"></div>
+    </div>
+</section>
+
+<!-- TUGAS -->
+<section id="tugas" class="page">
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>Daftar Tugas</h2>
+            <button class="btn primary" onclick="openModal('task')">＋ Tambah Tugas</button>
+        </div>
+
+        <div class="filters">
+            <input id="taskSearch" placeholder="🔎 Cari tugas..." oninput="renderTasks()">
+            <select id="taskClassFilter" onchange="renderTasks()"></select>
+            <select id="taskStatusFilter" onchange="renderTasks()">
+                <option value="">Semua status</option>
+                <option value="active">Aktif</option>
+                <option value="done">Lewat deadline</option>
+            </select>
+        </div>
+
+        <div id="tasksTable" class="table-wrap"></div>
+    </div>
+</section>
+
+<!-- JADWAL -->
+<section id="jadwal" class="page">
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>Jadwal Mengajar</h2>
+            <button class="btn primary" onclick="openModal('schedule')">＋ Tambah Jadwal</button>
+        </div>
+
+        <div id="scheduleTable" class="table-wrap"></div>
+    </div>
+</section>
+
+<!-- LAPORAN -->
+<section id="laporan" class="page">
+
+    <div class="panel">
+        <div class="panel-head">
+            <h2>📊 Ringkasan Nilai</h2>
+            <button class="btn success" onclick="exportCSV()">⬇ Export CSV</button>
+        </div>
+
+        <div id="reportKpi" class="kpi"></div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-head">
+            <h2>Rekap Nilai Per Siswa</h2>
+        </div>
+        <div id="studentReport" class="table-wrap"></div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-head">
+            <h2>Rata-rata Per Kelas</h2>
+        </div>
+        <div id="classReport" class="table-wrap"></div>
+    </div>
+
+</section>
+
+<!-- PROFIL -->
+<section id="profil" class="page">
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>Profil Guru</h2>
+            <button class="btn primary" onclick="saveProfile()">💾 Simpan Profil</button>
+        </div>
+
+        <div class="profile-box">
+            <div class="avatar" id="profileAvatar">G</div>
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label>Nama Guru</label>
+                    <input id="profileName" placeholder="Nama lengkap">
+                </div>
+
+                <div class="field">
+                    <label>NIP / NUPTK</label>
+                    <input id="profileNip" placeholder="NIP / NUPTK">
+                </div>
+
+                <div class="field">
+                    <label>Sekolah</label>
+                    <input id="profileSchool" placeholder="Nama sekolah">
+                </div>
+
+                <div class="field">
+                    <label>Mata Pelajaran</label>
+                    <input id="profileSubject" placeholder="Contoh: Informatika">
+                </div>
+
+                <div class="field">
+                    <label>Tahun Ajaran</label>
+                    <input id="profileYear" placeholder="2026/2027">
+                </div>
+
+                <div class="field">
+                    <label>Semester</label>
+                    <select id="profileSemester">
+                        <option>Ganjil</option>
+                        <option>Genap</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CATATAN -->
+<section id="catatan" class="page">
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>📌 Catatan Guru</h2>
+            <span id="noteStatus" style="font-size:12px;color:var(--success)">Autosave aktif</span>
+        </div>
+
+        <textarea id="notes" placeholder="Tulis catatan pribadi di sini..."></textarea>
+
+        <div style="margin-top:10px">
+            <button class="btn primary" onclick="saveNotes()">💾 Simpan Catatan</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- BACKUP -->
+<section id="backup" class="page">
+
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>💾 Backup & Data</h2>
+        </div>
+
+        <div class="notice">
+            <strong>Penyimpanan otomatis aktif</strong>
+            <small>Data disimpan di browser menggunakan localStorage. Refresh halaman tidak menghapus data.</small>
+        </div>
+
+        <div class="actions">
+            <button class="btn primary" onclick="downloadBackup()">⬇ Download Backup JSON</button>
+            <button class="btn" onclick="document.getElementById('restoreFile').click()">⬆ Restore JSON</button>
+            <button class="btn info" onclick="exportCSV()">📊 Export Nilai CSV</button>
+            <button class="btn info" onclick="exportAttendance()">📋 Export Absensi CSV</button>
+            <button class="btn danger" onclick="resetAll()">🗑️ Hapus Semua Data</button>
+        </div>
+
+        <input id="restoreFile" type="file" accept=".json" hidden onchange="restoreBackup(event)">
+
+    </div>
+
+    <div class="panel">
+        <div class="panel-head">
+            <h2>Informasi Penyimpanan</h2>
+        </div>
+        <div id="storageInfo"></div>
+    </div>
+
+</section>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <div class="modal-head">
+            <h2 id="modalTitle">Tambah Data</h2>
+            <button class="close" onclick="closeModal()">×</button>
+        </div>
+        <form id="modalForm"></form>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+/* =========================
+   DATABASE
+========================= */
+
+const STORAGE_KEY = "LYZZ_TEACHER_MANAGER_FULL_V1";
+const THEME_KEY = "LYZZ_TEACHER_THEME";
+
+function defaultDB(){
+    return {
+        classes:[],
+        students:[],
+        grades:[],
+        tasks:[],
+        attendance:[],
+        schedules:[],
+        notes:"",
+        profile:{
+            name:"",
+            nip:"",
+            school:"",
+            subject:"",
+            year:"",
+            semester:"Ganjil"
+        },
+        weights:{
+            Tugas:20,
+            Quiz:15,
+            UTS:25,
+            UAS:30,
+            Praktik:10
+        },
+        kkm:75
+    };
+}
+
+let db = loadDB();
+let editId = null;
+let currentType = null;
+
+/* =========================
+   STORAGE
+========================= */
+
+function loadDB(){
+    try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return defaultDB();
+
+        const saved = JSON.parse(raw);
+        const base = defaultDB();
+
+        return {
+            ...base,
+            ...saved,
+            profile:{...base.profile,...(saved.profile||{})},
+            weights:{...base.weights,...(saved.weights||{})}
+        };
+    }catch(e){
+        return defaultDB();
+    }
+}
+
+function saveDB(){
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(db));
+    renderAll();
+}
+
+function uid(){
+    return Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+}
+
+function today(){
+    const d = new Date();
+    return d.getFullYear()+"-"+
+        String(d.getMonth()+1).padStart(2,"0")+"-"+
+        String(d.getDate()).padStart(2,"0");
+}
+
+function esc(value){
+    return String(value ?? "")
+        .replace(/[&<>"']/g,c=>({
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[c]));
+}
+
+function toast(message){
+    const el=document.getElementById("toast");
+    el.textContent=message;
+    el.classList.add("show");
+
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer=setTimeout(()=>{
+        el.classList.remove("show");
+    },1800);
+}
+
+function empty(message,icon="📭"){
+    return `
+        <div class="empty">
+            <div class="empty-icon">${icon}</div>
+            ${esc(message)}
+        </div>
+    `;
+}
+
+/* =========================
+   HELPERS
+========================= */
+
+function className(id){
+    return db.classes.find(x=>x.id===id)?.name || "-";
+}
+
+function studentName(id){
+    return db.students.find(x=>x.id===id)?.name || "-";
+}
+
+function getStudent(id){
+    return db.students.find(x=>x.id===id);
+}
+
+function getClass(id){
+    return db.classes.find(x=>x.id===id);
+}
+
+function days(){
+    return ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
+}
+
+function daysIndex(day){
+    return days().indexOf(day);
+}
+
+function statusBadge(status){
+    const map={
+        "Hadir":"success",
+        "Izin":"info",
+        "Sakit":"warning",
+        "Alpa":"danger",
+        "Lulus":"success",
+        "Belum Lulus":"danger",
+        "Aktif":"success",
+        "Selesai":"info"
+    };
+
+    return `<span class="badge ${map[status]||""}">${esc(status)}</span>`;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+const pageInfo={
+    dashboard:["Dashboard","Ringkasan kegiatan mengajar"],
+    kelas:["Kelas","Kelola kelas dan mata pelajaran"],
+    siswa:["Siswa","Kelola data siswa"],
+    absensi:["Absensi","Catat dan rekap kehadiran"],
+    nilai:["Nilai","Kelola nilai dan KKM"],
+    tugas:["Tugas","Kelola tugas dan deadline"],
+    jadwal:["Jadwal","Kelola jadwal mengajar"],
+    laporan:["Laporan","Rekap nilai dan prestasi"],
+    profil:["Profil Guru","Informasi guru dan tahun ajaran"],
+    catatan:["Catatan","Catatan pribadi guru"],
+    backup:["Backup","Simpan dan pindahkan data"]
+};
+
+document.querySelectorAll(".nav button").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+        showPage(btn.dataset.page);
+    });
+});
+
+function showPage(page){
+    document.querySelectorAll(".nav button").forEach(btn=>{
+        btn.classList.toggle("active",btn.dataset.page===page);
+    });
+
+    document.querySelectorAll(".page").forEach(p=>{
+        p.classList.toggle("active",p.id===page);
+    });
+
+    document.getElementById("pageTitle").textContent=pageInfo[page][0];
+    document.getElementById("pageSub").textContent=pageInfo[page][1];
+
+    renderAll();
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+function classOptions(selected=""){
+    if(!db.classes.length){
+        return `<option value="">Belum ada kelas</option>`;
+    }
+
+    return `
+        <option value="">Pilih kelas</option>
+        ${db.classes.map(c=>`
+            <option value="${c.id}" ${c.id===selected?"selected":""}>
+                ${esc(c.name)}
+            </option>
+        `).join("")}
+    `;
+}
+
+function studentOptions(selected=""){
+    if(!db.students.length){
+        return `<option value="">Belum ada siswa</option>`;
+    }
+
+    return `
+        <option value="">Pilih siswa</option>
+        ${db.students.map(s=>`
+            <option value="${s.id}" ${s.id===selected?"selected":""}>
+                ${esc(s.name)} — ${esc(className(s.classId))}
+            </option>
+        `).join("")}
+    `;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+function openModal(type,id=null){
+    currentType=type;
+    editId=id;
+
+    const object=id ? getObject(type,id):null;
+
+    const names={
+        class:"Kelas",
+        student:"Siswa",
+        grade:"Nilai",
+        task:"Tugas",
+        schedule:"Jadwal"
+    };
+
+    document.getElementById("modalTitle").textContent=
+        object ? "Edit "+names[type] : "Tambah "+names[type];
+
+    let form="";
+
+    if(type==="class"){
+        form=`
+        <div class="form-grid">
+            <div class="field full">
+                <label>Nama Kelas *</label>
+                <input name="name" required value="${esc(object?.name)}" placeholder="Contoh: X IPA 1">
+            </div>
+
+            <div class="field">
+                <label>Mata Pelajaran</label>
+                <input name="subject" value="${esc(object?.subject)}" placeholder="Informatika">
+            </div>
+
+            <div class="field">
+                <label>Ruangan</label>
+                <input name="room" value="${esc(object?.room)}" placeholder="Lab 1">
+            </div>
+
+            <div class="field full">
+                <label>Wali / Keterangan</label>
+                <input name="description" value="${esc(object?.description)}">
+            </div>
+        </div>`;
+    }
+
+    if(type==="student"){
+        form=`
+        <div class="form-grid">
+            <div class="field full">
+                <label>Nama Lengkap *</label>
+                <input name="name" required value="${esc(object?.name)}" placeholder="Nama siswa">
+            </div>
+
+            <div class="field">
+                <label>NIS / NISN *</label>
+                <input name="nis" required value="${esc(object?.nis)}">
+            </div>
+
+            <div class="field">
+                <label>Jenis Kelamin</label>
+                <select name="gender">
+                    <option value="">Pilih</option>
+                    <option value="L" ${object?.gender==="L"?"selected":""}>Laki-laki</option>
+                    <option value="P" ${object?.gender==="P"?"selected":""}>Perempuan</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Kelas *</label>
+                <select name="classId" required>
+                    ${classOptions(object?.classId)}
+                </select>
+            </div>
+
+            <div class="field">
+                <label>No. HP</label>
+                <input name="phone" value="${esc(object?.phone)}">
+            </div>
+
+            <div class="field full">
+                <label>Catatan</label>
+                <textarea name="note">${esc(object?.note)}</textarea>
+            </div>
+        </div>`;
+    }
+
+    if(type==="grade"){
+    form=`
+    <div class="form-grid">
+
+        <div class="field full">
+            <label>Siswa *</label>
+            <select name="studentId" required>
+                ${studentOptions(object?.studentId)}
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Jenis Nilai *</label>
+            <select name="kind" required>
+                <option value="Tugas" ${object?.kind==="Tugas" ? "selected":""}>Tugas</option>
+                <option value="Quiz" ${object?.kind==="Quiz" ? "selected":""}>Quiz</option>
+                <option value="UH" ${object?.kind==="UH" ? "selected":""}>Ulangan Harian</option>
+                <option value="UTS" ${object?.kind==="UTS" ? "selected":""}>UTS</option>
+                <option value="UAS" ${object?.kind==="UAS" ? "selected":""}>UAS</option>
+                <option value="Praktik" ${object?.kind==="Praktik" ? "selected":""}>Praktik</option>
+                <option value="Proyek" ${object?.kind==="Proyek" ? "selected":""}>Proyek</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Nilai *</label>
+            <input
+                type="number"
+                name="score"
+                min="0"
+                max="100"
+                step="0.01"
+                required
+                value="${object?.score ?? ""}"
+                placeholder="0 - 100"
+            >
+        </div>
+
+        <div class="field">
+            <label>Tanggal *</label>
+            <input
+                type="date"
+                name="date"
+                required
+                value="${object?.date || today()}"
+            >
+        </div>
+
+        <div class="field">
+            <label>KKM</label>
+            <input
+                type="number"
+                name="kkm"
+                min="0"
+                max="100"
+                value="${object?.kkm ?? 75}"
+            >
+        </div>
+
+        <div class="field full">
+            <label>Keterangan</label>
+            <textarea
+                name="description"
+                placeholder="Keterangan nilai..."
+            >${esc(object?.description)}</textarea>
+        </div>
+
+    </div>
+    `;
+}
+
+
+/* =========================================
+   TASK
+========================================= */
+
+if(type==="task"){
+    form=`
+    <div class="form-grid">
+
+        <div class="field full">
+            <label>Judul Tugas *</label>
+            <input
+                name="title"
+                required
+                value="${esc(object?.title)}"
+                placeholder="Contoh: Tugas Bab 1"
+            >
+        </div>
+
+        <div class="field">
+            <label>Kelas *</label>
+            <select name="classId" required>
+                ${classOptions(object?.classId)}
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Deadline *</label>
+            <input
+                type="date"
+                name="deadline"
+                required
+                value="${object?.deadline || today()}"
+            >
+        </div>
+
+        <div class="field">
+            <label>Bobot Nilai (%)</label>
+            <input
+                type="number"
+                name="weight"
+                min="0"
+                max="100"
+                value="${object?.weight ?? 0}"
+                placeholder="Contoh: 20"
+            >
+        </div>
+
+        <div class="field">
+            <label>Status</label>
+            <select name="status">
+                <option value="Aktif"
+                    ${object?.status==="Aktif" || !object ? "selected":""}>
+                    Aktif
+                </option>
+                <option value="Selesai"
+                    ${object?.status==="Selesai" ? "selected":""}>
+                    Selesai
+                </option>
+            </select>
+        </div>
+
+        <div class="field full">
+            <label>Deskripsi</label>
+            <textarea
+                name="description"
+                placeholder="Deskripsi tugas..."
+            >${esc(object?.description)}</textarea>
+        </div>
+
+    </div>
+    `;
+}
+
+
+/* =========================================
+   SCHEDULE
+========================================= */
+
+if(type==="schedule"){
+
+    const days=[
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu"
+    ];
+
+    form=`
+    <div class="form-grid">
+
+        <div class="field">
+            <label>Hari *</label>
+
+            <select name="day" required>
+                ${
+                    days.map(day=>`
+                        <option
+                            value="${day}"
+                            ${object?.day===day ? "selected":""}
+                        >
+                            ${day}
+                        </option>
+                    `).join("")
+                }
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Jam Mulai *</label>
+
+            <input
+                type="time"
+                name="startTime"
+                required
+                value="${esc(object?.startTime || "07:00")}"
+            >
+        </div>
+
+        <div class="field">
+            <label>Jam Selesai *</label>
+
+            <input
+                type="time"
+                name="endTime"
+                required
+                value="${esc(object?.endTime || "08:30")}"
+            >
+        </div>
+
+        <div class="field">
+            <label>Kelas *</label>
+
+            <select name="classId" required>
+                ${classOptions(object?.classId)}
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Ruangan</label>
+
+            <input
+                name="room"
+                value="${esc(object?.room)}"
+                placeholder="Contoh: Lab Komputer"
+            >
+        </div>
+
+    </div>
+    `;
+}
+
+
+/* =========================================
+   FORM FOOTER
+========================================= */
+
+form+=`
+    <div class="modal-foot">
+
+        ${
+            editId
+            ?
+            `
+            <button
+                type="button"
+                class="btn danger"
+                onclick="remove('${type}','${editId}');closeModal()"
+            >
+                🗑️ Hapus
+            </button>
+            `
+            :
+            ""
+        }
+
+        <button
+            type="button"
+            class="btn"
+            onclick="closeModal()"
+        >
+            Batal
+        </button>
+
+        <button
+            type="submit"
+            class="btn primary"
+        >
+            💾 ${object ? "Update":"Simpan"}
+        </button>
+
+    </div>
+`;
+
+
+document.getElementById("modalForm").innerHTML=form;
+
+document.getElementById("modalForm").onsubmit=submitModal;
+
+document.getElementById("modal").classList.add("show");
+
+}
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+function closeModal(){
+
+    document
+        .getElementById("modal")
+        .classList.remove("show");
+
+    editId=null;
+
+}
+
+
+/* =========================================
+   CLOSE MODAL CLICK OUTSIDE
+========================================= */
+
+document
+    .getElementById("modal")
+    .addEventListener("click",function(event){
+
+        if(event.target===this){
+            closeModal();
+        }
+
+    });
+
+
+/* =========================================
+   SUBMIT MODAL
+========================================= */
+
+function submitModal(event){
+
+    event.preventDefault();
+
+    const data=Object.fromEntries(
+        new FormData(event.target).entries()
+    );
+
+
+    const map={
+        class:"classes",
+        student:"students",
+        grade:"grades",
+        task:"tasks",
+        schedule:"schedules"
+    };
+
+
+    const key=map[currentType];
+
+
+    if(!key){
+        return;
+    }
+
+
+    /* VALIDASI NILAI */
+
+    if(currentType==="grade"){
+
+        data.score=Math.max(
+            0,
+            Math.min(
+                100,
+                Number(data.score)
+            )
+        );
+
+        data.kkm=Math.max(
+            0,
+            Math.min(
+                100,
+                Number(data.kkm || 75)
+            )
+        );
+
+    }
+
+
+    /* VALIDASI BOBOT */
+
+    if(currentType==="task"){
+
+        data.weight=Math.max(
+            0,
+            Math.min(
+                100,
+                Number(data.weight || 0)
+            )
+        );
+
+    }
+
+
+    /* CEK DUPLIKAT NIS */
+
+    if(currentType==="student"){
+
+        const duplicate=db.students.find(item=>
+            item.nis &&
+            data.nis &&
+            item.nis===data.nis &&
+            item.id!==editId
+        );
+
+        if(duplicate){
+
+            alert("NIS/NISN sudah digunakan siswa lain.");
+
+            return;
+        }
+
+    }
+
+
+    /* CEK NAMA KELAS */
+
+    if(currentType==="class"){
+
+        const duplicate=db.classes.find(item=>
+            item.name.toLowerCase()===
+            data.name.toLowerCase() &&
+            item.id!==editId
+        );
+
+        if(duplicate){
+
+            alert("Nama kelas tersebut sudah ada.");
+
+            return;
+        }
+
+    }
+
+
+    /* CEK JADWAL */
+
+    if(currentType==="schedule"){
+
+        const conflict=db.schedules.find(item=>
+
+            item.day===data.day &&
+
+            item.classId===data.classId &&
+
+            item.id!==editId &&
+
+            data.startTime < item.endTime &&
+
+            data.endTime > item.startTime
+
+        );
+
+
+        if(conflict){
+
+            alert(
+                "Jadwal bentrok dengan jadwal yang sudah ada."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    /* UPDATE */
+
+    if(editId){
+
+        const index=db[key].findIndex(
+            item=>item.id===editId
+        );
+
+
+        if(index>=0){
+
+            db[key][index]={
+                ...db[key][index],
+                ...data
+            };
+
+        }
+
+
+        toast("Data berhasil diperbarui");
+
+    }
+
+
+    /* TAMBAH */
+
+    else{
+
+        db[key].push({
+            id:uid(),
+            createdAt:new Date().toISOString(),
+            ...data
+        });
+
+
+        toast("Data berhasil ditambahkan");
+
+    }
+
+
+    saveDB();
+
+    closeModal();
+
+}
+
+
+/* =========================================
+   EDIT
+========================================= */
+
+function edit(type,id){
+
+    openModal(type,id);
+
+}
+
+
+/* =========================================
+   DELETE
+========================================= */
+
+function remove(type,id){
+
+    if(!confirm(
+        "Yakin ingin menghapus data ini?"
+    )){
+        return;
+    }
+
+
+    const map={
+        class:"classes",
+        student:"students",
+        grade:"grades",
+        task:"tasks",
+        schedule:"schedules"
+    };
+
+
+    const key=map[type];
+
+
+    if(!key){
+        return;
+    }
+
+
+    /* HAPUS KELAS */
+
+    if(type==="class"){
+
+        const studentsInClass=db.students.filter(
+            student=>student.classId===id
+        );
+
+
+        if(
+            studentsInClass.length &&
+            !confirm(
+                `Kelas ini memiliki ${studentsInClass.length} siswa.\n\n`+
+                "Jika kelas dihapus, data siswa tersebut juga akan dihapus.\n\n"+
+                "Lanjutkan?"
+            )
+        ){
+            return;
+        }
+
+
+        const studentIds=studentsInClass.map(
+            student=>student.id
+        );
+
+
+        db.students=db.students.filter(
+            student=>student.classId!==id
+        );
+
+
+        db.grades=db.grades.filter(
+            grade=>!studentIds.includes(
+                grade.studentId
+            )
+        );
+
+
+        db.attendance=db.attendance.filter(
+            attendance=>attendance.classId!==id
+        );
+
+
+        db.tasks=db.tasks.filter(
+            task=>task.classId!==id
+        );
+
+
+        db.schedules=db.schedules.filter(
+            schedule=>schedule.classId!==id
+        );
+
+    }
+
+
+    /* HAPUS SISWA */
+
+    if(type==="student"){
+
+        db.grades=db.grades.filter(
+            grade=>grade.studentId!==id
+        );
+
+
+        db.attendance=db.attendance.filter(
+            attendance=>attendance.studentId!==id
+        );
+
+    }
+
+
+    db[key]=db[key].filter(
+        item=>item.id!==id
+    );
+
+
+    saveDB();
+
+    toast("Data berhasil dihapus");
+
+}
+
+
+/* =========================================
+   RENDER ALL
+========================================= */
+
+function renderAll(){
+
+    const statClasses=
+        document.getElementById("statClasses");
+
+    const statStudents=
+        document.getElementById("statStudents");
+
+    const statTasks=
+        document.getElementById("statTasks");
+
+    const statAvg=
+        document.getElementById("statAvg");
+
+
+    if(statClasses){
+        statClasses.textContent=
+            db.classes.length;
+    }
+
+
+    if(statStudents){
+        statStudents.textContent=
+            db.students.length;
+    }
+
+
+    const activeTasks=db.tasks.filter(
+        task=>!task.deadline || task.deadline>=today()
+    );
+
+
+    if(statTasks){
+        statTasks.textContent=
+            activeTasks.length;
+    }
+
+
+    const average=db.grades.length
+        ?
+        db.grades.reduce(
+            (total,item)=>
+                total+Number(item.score||0),
+            0
+        )/db.grades.length
+        :
+        0;
+
+
+    if(statAvg){
+        statAvg.textContent=
+            average.toFixed(1);
+    }
+
+
+    renderClasses();
+    renderStudents();
+    renderAttendance();
+    renderGrades();
+    renderTasks();
+    renderSchedules();
+    renderReport();
+    renderAttendanceReport();
+    renderDashboardExtra();
+    refreshClassSelects();
+
+
+    const notes=
+        document.getElementById("notes");
+
+
+    if(notes &&
+        document.activeElement!==notes
+    ){
+        notes.value=db.notes||"";
+    }
+
+}
+
+
+/* =========================================
+   RENDER CLASSES
+========================================= */
+
+function renderClasses(){
+
+    const element=
+        document.getElementById("classCards");
+
+
+    if(!element){
+        return;
+    }
+
+
+    if(!db.classes.length){
+
+        element.innerHTML=empty(
+            "Belum ada kelas. Klik Tambah Kelas untuk memulai."
+        );
+
+        return;
+
+    }
+
+
+    element.innerHTML=db.classes.map(item=>{
+
+        const students=db.students.filter(
+            student=>student.classId===item.id
+        );
+
+
+        const ids=students.map(
+            student=>student.id
+        );
+
+
+        const grades=db.grades.filter(
+            grade=>ids.includes(grade.studentId)
+        );
+
+
+        const avg=grades.length
+            ?
+            grades.reduce(
+                (total,grade)=>
+                    total+Number(grade.score),
+                0
+            )/grades.length
+            :
+            0;
+
+
+        return `
+        <div class="class-card">
+
+            <span class="badge">
+                ${esc(item.subject||"Mata Pelajaran")}
+            </span>
+
+            <h3>
+                ${esc(item.name)}
+            </h3>
+
+            <p>
+                📍 ${esc(item.room||"Belum ada ruangan")}
+            </p>
+
+            <p>
+                👨‍🎓 ${students.length} siswa
+            </p>
+
+            <p>
+                📊 Rata-rata ${avg.toFixed(1)}
+            </p>
+
+            <div style="
+                margin-top:14px;
+                display:flex;
+                gap:7px;
+                flex-wrap:wrap;
+            ">
+
+                <button
+                    class="btn small"
+                    onclick="edit('class','${item.id}')"
+                >
+                    ✏️ Edit
+                </button>
+
+                <button
+                    class="btn small danger"
+                    onclick="remove('class','${item.id}')"
+                >
+                    🗑️ Hapus
+                </button>
+
+            </div>
+
+        </div>
+        `;
+
+    }).join("");
+
+}
+
+
+/* =========================================
+   CLASS SELECT
+========================================= */
+
+function refreshClassSelects(){
+
+    const filter=
+        document.getElementById(
+            "studentClassFilter"
+        );
+
+
+    if(filter){
+
+        const old=filter.value;
+
+
+        filter.innerHTML=`
+            <option value="">Semua kelas</option>
+
+            ${
+                db.classes.map(item=>`
+                    <option value="${item.id}">
+                        ${esc(item.name)}
+                    </option>
+                `).join("")
+            }
+        `;
+
+
+        if(
+            db.classes.some(item=>item.id===old)
+        ){
+            filter.value=old;
+        }
+
+    }
+
+
+    const attClass=
+        document.getElementById("attClass");
+
+
+    if(attClass){
+
+        const old=attClass.value;
+
+
+        if(db.classes.length){
+
+            attClass.innerHTML=
+                db.classes.map(item=>`
+                    <option value="${item.id}">
+                        ${esc(item.name)}
+                    </option>
+                `).join("");
+
+
+            if(
+                db.classes.some(item=>item.id===old)
+            ){
+                attClass.value=old;
+            }
+
+        }else{
+
+            attClass.innerHTML=`
+                <option value="">
+                    Belum ada kelas
+                </option>
+            `;
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   RENDER STUDENTS
+========================================= */
+
+function renderStudents(){
+
+    const element=
+        document.getElementById(
+            "studentsTable"
+        );
+
+
+    if(!element){
+        return;
+    }
+
+
+    const search=(
+        document.getElementById(
+            "studentSearch"
+        )?.value||""
+    ).toLowerCase();
+
+
+    const filter=
+        document.getElementById(
+            "studentClassFilter"
+        )?.value||"";
+
+
+    const students=db.students.filter(student=>{
+
+        const matchSearch=
+            (student.name||"")
+                .toLowerCase()
+                .includes(search)
+            ||
+            (student.nis||"")
+                .toLowerCase()
+                .includes(search);
+
+
+        const matchClass=
+            !filter ||
+            student.classId===filter;
+
+
+        return matchSearch&&matchClass;
+
+    });
+
+
+    if(!students.length){
+
+        element.innerHTML=empty(
+            "Belum ada siswa atau data tidak ditemukan."
+        );
+
+        return;
+
+    }
+
+
+    element.innerHTML=`
+    <table>
+
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>NIS/NISN</th>
+                <th>L/P</th>
+                <th>Kelas</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            ${
+                students.map(student=>`
+
+                    <tr>
+
+                        <td>
+                            <b>${esc(student.name)}</b>
+                        </td>
+
+                        <td>
+                            ${esc(student.nis||"-")}
+                        </td>
+
+                        <td>
+                            ${esc(student.gender||"-")}
+                        </td>
+
+                        <td>
+                            ${esc(className(student.classId))}
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="btn small"
+                                onclick="edit('student','${student.id}')"
+                            >
+                                ✏️
+                            </button>
+
+                            <button
+                                class="btn small danger"
+                                onclick="remove('student','${student.id}')"
+                            >
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `).join("")
+            }
+
+        </tbody>
+
+    </table>
+    `;
+
+}
+
+
+/* =========================================
+   RENDER ATTENDANCE
+========================================= */
+
+function renderAttendance(){
+
+    const element=
+        document.getElementById(
+            "attendanceTable"
+        );
+
+
+    if(!element){
+        return;
+    }
+
+
+    const classSelect=
+        document.getElementById("attClass");
+
+
+    const dateElement=
+        document.getElementById("attDate");
+
+
+    if(
+        dateElement &&
+        !dateElement.value
+    ){
+        dateElement.value=today();
+    }
+
+
+    const classId=
+        classSelect?.value||"";
+
+
+    const date=
+        dateElement?.value||today();
+
+
+    const students=db.students.filter(
+        student=>student.classId===classId
+    );
+
+
+    if(
+        !classId||
+        !students.length
+    ){
+
+        element.innerHTML=empty(
+            "Tambahkan kelas dan siswa terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+
+    const statuses=[
+        "Hadir",
+        "Izin",
+        "Sakit",
+        "Alpa"
+    ];
+
+
+    element.innerHTML=`
+    <table>
+
+        <thead>
+            <tr>
+                <th>Siswa</th>
+                <th>Status Kehadiran</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            ${
+                students.map(student=>{
+
+                    const attendance=
+                        db.attendance.find(item=>
+                            item.studentId===student.id &&
+                            item.date===date
+                        );
+
+
+                    const status=
+                        attendance?.status||"Hadir";
+
+
+                    return `
+                    <tr>
+
+                        <td>
+                            <b>${esc(student.name)}</b>
+                        </td>
+
+                        <td>
+
+                            <div class="radio-row">
+
+                                ${
+                                    statuses.map(st=>`
+
+                                        <label class="radio">
+
+                                            <input
+                                                type="radio"
+                                                name="att_${student.id}"
+                                                value="${st}"
+                                                ${status===st?"checked":""}
+                                                onchange="
+                                                    setAttendance(
+                                                        '${student.id}',
+                                                        '${classId}',
+                                                        '${date}',
+                                                        '${st}'
+                                                    )
+                                                "
+                                            >
+
+                                            ${st}
+
+                                        </label>
+
+                                    `).join("")
+                                }
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                    `;
+
+                }).join("")
+            }
+
+        </tbody>
+
+    </table>
+    `;
+
+}
+
+
+/* =========================================
+   SET ATTENDANCE
+========================================= */
+
+function setAttendance(
+    studentId,
+    classId,
+    date,
+    status
+){
+
+    const index=
+        db.attendance.findIndex(item=>
+            item.studentId===studentId &&
+            item.date===date
+        );
+
+
+    const data={
+        id:
+            index>=0
+            ?db.attendance[index].id
+            :uid(),
+
+        studentId,
+        classId,
+        date,
+        status
+    };
+
+
+    if(index>=0){
+
+        db.attendance[index]=data;
+
+    }else{
+
+        db.attendance.push(data);
+
+    }
+
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(db)
+    );
+
+
+    renderAttendanceReport();
+
+    toast("Absensi tersimpan");
+
+}
+
+
+/* =========================================
+   RENDER GRADES
+========================================= */
+
+function renderGrades(){
+
+    const element=
+        document.getElementById(
+            "gradesTable"
+        );
+
+
+    if(!element){
+        return;
+    }
+
+
+    if(!db.grades.length){
+
+        element.innerHTML=empty(
+            "Belum ada nilai."
+        );
+
+        return;
+
+    }
+
+
+    element.innerHTML=`
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Siswa</th>
+                <th>Kelas</th>
+                <th>Jenis</th>
+                <th>Nilai</th>
+                <th>KKM</th>
+                <th>Status</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            ${
+                db.grades.map(grade=>{
+
+                    const score=Number(grade.score||0);
+
+                    const kkm=Number(grade.kkm||75);
+
+                    const pass=score>=kkm;
+
+
+                    const student=db.students.find(
+                        item=>item.id===grade.studentId
+                    );
+
+
+                    return `
+                    <tr>
+
+                        <td>
+                            ${esc(studentName(grade.studentId))}
+                        </td>
+
+                        <td>
+                            ${esc(
+                                className(student?.classId)
+                            )}
+                        </td>
+
+                        <td>
+                            ${esc(grade.kind)}
+                        </td>
+
+                        <td>
+                            <b>${score}</b>
+                        </td>
+
+                        <td>
+                            ${kkm}
+                        </td>
+
+                        <td>
+                            <span class="badge"
+                                style="
+                                    background:${pass?"#dcfce7":"#fee2e2"};
+                                    color:${pass?"#166534":"#b91c1c"};
+                                "
+                            >
+                                ${pass?"Lulus":"Belum Lulus"}
+                            </span>
+                        </td>
+
+                        <td>
+                            ${esc(grade.date||"-")}
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="btn small"
+                                onclick="edit('grade','${grade.id}')"
+                            >
+                                ✏️
+                            </button>
+
+                            <button
+                                class="btn small danger"
+                                onclick="remove('grade','${grade.id}')"
+                            >
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+                    `;
+
+                }).join("")
+            }
+
+        </tbody>
+
+    </table>
+    `;
+
+}
+
+
+/* =========================================
+   RENDER TASKS
+========================================= */
+
+function renderTasks(){
+
+    const element=
+        document.getElementById(
+            "tasksTable"
+        );
+
+
+    if(!element){
+        return;
+    }
+
+
+    if(!db.tasks.length){
+
+        element.innerHTML=empty(
+            "Belum ada tugas."
+        );
+
+        return;
+
+    }
+
+
+    const current=today();
+
+
+    element.innerHTML=`
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Tugas</th>
+                <th>Kelas</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Deskripsi</th>
+                <th>Aksi</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            ${
+                db.tasks.map(task=>{
+
+                    const expired=
+                        task.deadline &&
+                        task.deadline<current;
+
+
+                    return `
+                    <tr>
+
+                        <td>
+                            <b>${esc(task.title)}</b>
+                        </td>
+
+                        <td>
+                            ${esc(className(task.classId))}
+                        </td>
+
+                        <td>
+                            ${esc(task.deadline||"-")}
+                        </td>
+
+                        <td>
+
+                            <span class="badge"
+                                style="
+                                    background:${
+                                        expired
+                                        ?"#fee2e2"
+                                        :task.status==="Selesai"
+                                        ?"#dcfce7"
+                                        :"#eef2ff"
+                                    };
+                                    color:${
+                                        expired
+                                        ?"#b91c1c"
+                                        :task.status==="Selesai"
+                                        ?"#166534"
+                                        :"#4f46e5"
+                                    };
+                                "
+                            >
+                                ${
+                                    expired
+                                    ?"Lewat Deadline"
+                                    :esc(task.status||"Aktif")
+                                }
+                            </span>
+
+                        </td>
+
+                        <td>
+                            ${esc(task.description||"-")}
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="btn small"
+                                onclick="edit('task','${task.id}')"
+                            >
+                                ✏️
+                            </button>
+
+                            <button
+                                class="btn small danger"
+                                onclick="remove('task','${task.id}')"
+                            >
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+                    `;
+
+                }).join("")
+            }
+
+        </tbody>
+
+    </table>
+    `;
+
+}
+
+
+/* =========================================
+   RENDER SCHEDULES
+========================================= */
+
+function renderSchedules(){
+
+    const element=
+        document.getElementById(
+            "scheduleTable"
+        );
+
+
+    if(!element){
+        return;
+    }
+
+
+    if(!db.schedules.length){
+
+        element.innerHTML=empty(
+            "Belum ada jadwal."
+        );
+
+        return;
+
+    }
+
+
+    const order=[
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu"
+    ];
+
+
+    const schedules=[...db.schedules].sort(
+        (a,b)=>{
+
+            const day=
+                order.indexOf(a.day)-
+                order.indexOf(b.day);
+
+
+            if(day!==0){
+                return day;
+            }
+
+
+            return (
+                (a.startTime||"")
+                .localeCompare(
+                    b.startTime||""
+                )
+            );
+
+        }
+    );
+
+
+    element.innerHTML=`
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Hari</th>
+                <th>Jam</th>
+                <th>Kelas</th>
+                <th>Ruangan</th>
+                <th>Aksi</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            ${
+                schedules.map(schedule=>`
+
+                    <tr>
+
+                        <td>
+                            <b>${esc(schedule.day)}</b>
+                        </td>
+
+                        <td>
+                            ${esc(schedule.startTime||"-")}
+                            -
+                            ${esc(schedule.endTime||"-")}
+                        </td>
+
+                        <td>
+                            ${esc(className(schedule.classId))}
+                        </td>
+
+                        <td>
+                            ${esc(schedule.room||"-")}
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="btn small"
+                                onclick="edit('schedule','${schedule.id}')"
+                            >
+                                ✏️
+                            </button>
+
+                            <button
+                                class="btn small danger"
+                                onclick="remove('schedule','${schedule.id}')"
+                            >
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `).join("")
+            }
+
+        </tbody>
+
+    </table>
+    `;
+
+}
+
+
+/* =========================================
+   REPORT
+========================================= */
+
+function renderReport(){
+
+    const element=
+        document.getElementById(
+            "report"
+        );
+
+
+    if(!element){
+        return;
+    }
+
+
+    if(
+        !db.classes.length &&
+        !db.grades.length
+    ){
+
+        element.innerHTML=empty(
+            "Belum ada data untuk laporan."
+        );
+
+        return;
+
+    }
+
+
+    const total=db.grades.length;
+
+
+    const average=total
+        ?
+        db.grades.reduce(
+            (total,grade)=>
+                total+Number(grade.score||0),
+            0
+        )/total
+        :
+        0;
+
+
+    const highest=total
+        ?
+        Math.max(
+            ...db.grades.map(
+                grade=>Number(grade.score||0)
+            )
+        )
+        :
+        0;
+
+
+    const lowest=total
+        ?
+        Math.min(
+            ...db.grades.map(
+                grade=>Number(grade.score||0)
+            )
+        )
+        :
+        0;
+
+
+    element.innerHTML=`
+
+    <div class="grid">
+
+        <div class="stat">
+            <div class="label">Jumlah Nilai</div>
+            <div class="num">${total}</div>
+        </div>
+
+        <div class="stat">
+            <div class="label">Rata-rata</div>
+            <div class="num">${average.toFixed(1)}</div>
+        </div>
+
+        <div class="stat">
+            <div class="label">Tertinggi</div>
+            <div class="num">${highest}</div>
+        </div>
+
+        <div class="stat">
+            <div class="label">Terendah</div>
+            <div class="num">${lowest}</div>
+        </div>
+
+    </div>
+
+
+    <div class="panel" style="box-shadow:none">
+
+        <h3>Rekap Nilai Per Kelas</h3>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Kelas</th>
+                        <th>Siswa</th>
+                        <th>Nilai</th>
+                        <th>Rata-rata</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    ${
+                        db.classes.map(cls=>{
+
+                            const students=
+                                db.students.filter(
+                                    student=>
+                                        student.classId===cls.id
+                                );
+
+
+                            const ids=
+                                students.map(
+                                    student=>student.id
+                                );
+
+
+                            const grades=
+                                db.grades.filter(
+                                    grade=>
+                                        ids.includes(
+                                            grade.studentId
+                                        )
+                                );
+
+
+                            const avg=grades.length
+                                ?
+                                grades.reduce(
+                                    (total,grade)=>
+                                        total+
+                                        Number(grade.score||0),
+                                    0
+                                )/grades.length
+                                :
+                                0;
+
+
+                            return `
+                            <tr>
+
+                                <td>
+                                    <b>${esc(cls.name)}</b>
+                                </td>
+
+                                <td>
+                                    ${students.length}
+                                </td>
+
+                                <td>
+                                    ${grades.length}
+                                </td>
+
+                                <td>
+                                    ${avg.toFixed(1)}
+                                </td>
+
+                            </tr>
+                            `;
+
+                        }).join("")
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel" style="box-shadow:none">
+
+        <h3>Rekap Nilai Per Siswa</h3>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Kelas</th>
+                        <th>Jumlah Nilai</th>
+                        <th>Rata-rata</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    ${
+                        db.students.map(student=>{
+
+                            const grades=
+                                db.grades.filter(
+                                    grade=>
+                                        grade.studentId===
+                                        student.id
+                                );
+
+
+                            const avg=grades.length
+                                ?
+                                grades.reduce(
+                                    (total,grade)=>
+                                        total+
+                                        Number(grade.score||0),
+                                    0
+                                )/grades.length
+                                :
+                                0;
+
+
+                            const kkm=grades.length
+                                ?
+                                Number(
+                                    grades[0].kkm||75
+                                )
+                                :
+                                75;
+
+
+                            return `
+                            <tr>
+
+                                <td>
+                                    <b>${esc(student.name)}</b>
+                                </td>
+
+                                <td>
+                                    ${esc(
+                                        className(
+                                            student.classId
+                                        )
+                                    )}
+                                </td>
+
+                                <td>
+                                    ${grades.length}
+                                </td>
+
+                                <td>
+                                    ${avg.toFixed(1)}
+                                </td>
+
+                                <td>
+
+                                    <span class="badge"
+                                        style="
+                                            background:${
+                                                avg>=kkm
+                                                ?"#dcfce7"
+                                                :"#fee2e2"
+                                            };
+                                            color:${
+                                                avg>=kkm
+                                                ?"#166534"
+                                                :"#b91c1c"
+                                            };
+                                        "
+                                    >
+                                        ${
+                                            !grades.length
+                                            ?"Belum Ada Nilai"
+                                            :avg>=kkm
+                                            ?"Lulus"
+                                            :"Belum Lulus"
+                                        }
+                                    </span>
+
+                                </td>
+
+                            </tr>
+                            `;
+
+                        }).join("")
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   ATTENDANCE REPORT
+========================================= */
+
+function renderAttendanceReport(){
+
+    const element=
+        document.getElementById(
+            "attendanceReport"
+        );
+
+
+    if(!element){
+        return;
+    }
+
+
+    if(!db.students.length){
+
+        element.innerHTML=empty(
+            "Belum ada siswa."
+        );
+
+        return;
+
+    }
+
+
+    element.innerHTML=`
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Siswa</th>
+                    <th>Hadir</th>
+                    <th>Izin</th>
+                    <th>Sakit</th>
+                    <th>Alpa</th>
+                    <th>Total</th>
+                    <th>Kehadiran</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                ${
+                    db.students.map(student=>{
+
+                        const data=
+                            db.attendance.filter(
+                                item=>
+                                    item.studentId===
+                                    student.id
+                            );
+
+
+                        const hadir=
+                            data.filter(
+                                x=>x.status==="Hadir"
+                            ).length;
+
+
+                        const izin=
+                            data.filter(
+                                x=>x.status==="Izin"
+                            ).length;
+
+
+                        const sakit=
+                            data.filter(
+                                x=>x.status==="Sakit"
+                            ).length;
+
+
+                        const alpa=
+                            data.filter(
+                                x=>x.status==="Alpa"
+                            ).length;
+
+
+                        const total=
+                            data.length;
+
+
+                        const percent=
+                            total
+                            ?
+                            (hadir/total)*100
+                            :
+                            0;
+
+
+                        return `
+                        <tr>
+
+                            <td>
+                                <b>${esc(student.name)}</b>
+                            </td>
+
+                            <td>${hadir}</td>
+
+                            <td>${izin}</td>
+
+                            <td>${sakit}</td>
+
+                            <td>${alpa}</td>
+
+                            <td>${total}</td>
+
+                            <td>
+                                ${percent.toFixed(1)}%
+                            </td>
+
+                        </tr>
+                        `;
+
+                    }).join("")
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   DASHBOARD EXTRA
+========================================= */
+
+function renderDashboardExtra(){
+
+    const element=
+        document.getElementById(
+            "dashboardExtra"
+        );
+
+
+    if(!element){
+        return;
+    }
+
+
+    const current=today();
+
+
+    const tasks=db.tasks
+        .filter(task=>
+            task.deadline>=current
+        )
+        .sort(
+            (a,b)=>
+                a.deadline.localeCompare(
+                    b.deadline
+                )
+        )
+        .slice(0,5);
+
+
+    const todayDate=new Date();
+
+
+    const dayNames=[
+        "Minggu",
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu"
+    ];
+
+
+    const todayName=
+        dayNames[todayDate.getDay()];
+
+
+    const schedules=db.schedules.filter(
+        schedule=>
+            schedule.day===todayName
+    );
+
+
+    const attendanceToday=
+        db.attendance.filter(
+            item=>item.date===current
+        );
+
+
+    const hadir=attendanceToday.filter(
+        item=>item.status==="Hadir"
+    ).length;
+
+
+    const izin=attendanceToday.filter(
+        item=>item.status==="Izin"
+    ).length;
+
+
+    const sakit=attendanceToday.filter(
+        item=>item.status==="Sakit"
+    ).length;
+
+
+    const alpa=attendanceToday.filter(
+        item=>item.status==="Alpa"
+    ).length;
+
+
+    element.innerHTML=`
+
+    <div class="grid">
+
+        <div class="stat">
+
+            <div class="label">
+                Hadir Hari Ini
+            </div>
+
+            <div class="num">
+                ${hadir}
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="label">
+                Izin Hari Ini
+            </div>
+
+            <div class="num">
+                ${izin}
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="label">
+                Sakit Hari Ini
+            </div>
+
+            <div class="num">
+                ${sakit}
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="label">
+                Alpa Hari Ini
+            </div>
+
+            <div class="num">
+                ${alpa}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panel-head">
+            <h2>
+                📅 Jadwal Hari Ini — ${todayName}
+            </h2>
+        </div>
+
+        ${
+            schedules.length
+            ?
+            `
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Jam</th>
+                            <th>Kelas</th>
+                            <th>Ruangan</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        ${
+                            schedules.map(item=>`
+
+                                <tr>
+
+                                    <td>
+                                        ${esc(item.startTime)}
+                                        -
+                                        ${esc(item.endTime)}
+                                    </td>
+
+                                    <td>
+                                        ${esc(
+                                            className(
+                                                item.classId
+                                            )
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        ${esc(item.room||"-")}
+                                    </td>
+
+                                </tr>
+
+                            `).join("")
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            `
+            :
+            empty(
+                "Tidak ada jadwal hari ini."
+            )
+        }
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panel-head">
+
+            <h2>
+                📝 Deadline Tugas Terdekat
+            </h2>
+
+        </div>
+
+        ${
+            tasks.length
+            ?
+            `
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Tugas</th>
+                            <th>Kelas</th>
+                            <th>Deadline</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        ${
+                            tasks.map(task=>`
+
+                                <tr>
+
+                                    <td>
+                                        <b>${esc(task.title)}</b>
+                                    </td>
+
+                                    <td>
+                                        ${esc(
+                                            className(
+                                                task.classId
+                                            )
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        ${esc(task.deadline)}
+                                    </td>
+
+                                </tr>
+
+                            `).join("")
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            `
+            :
+            empty(
+                "Tidak ada tugas aktif."
+            )
+        }
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   NOTES
+========================================= */
+
+function saveNotes(){
+
+    const notes=
+        document.getElementById("notes");
+
+
+    db.notes=notes?.value||"";
+
+
+    saveDB();
+
+    toast("Catatan berhasil disimpan");
+
+}
+
+
+const notesElement=
+    document.getElementById("notes");
+
+
+if(notesElement){
+
+    notesElement.addEventListener(
+        "input",
+        function(){
+
+            db.notes=this.value;
+
+
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(db)
+            );
+
+
+            const status=
+                document.getElementById(
+                    "noteStatus"
+                );
+
+
+            if(status){
+
+                status.textContent=
+                    "✓ Tersimpan otomatis";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   BACKUP
+========================================= */
+
+function downloadBackup(){
+
+    const backup={
+        version:5,
+        exportedAt:new Date().toISOString(),
+        data:db
+    };
+
+
+    const json=JSON.stringify(
+        backup,
+        null,
+        2
+    );
+
+
+    const blob=new Blob(
+        [json],
+        {
+            type:"application/json"
+        }
+    );
+
+
+    const url=
+        URL.createObjectURL(blob);
+
+
+    const link=
+        document.createElement("a");
+
+
+    link.href=url;
+
+    link.download=
+        "LYZZ-Teacher-Backup-"+
+        today()+
+        ".json";
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+
+    setTimeout(
+        ()=>URL.revokeObjectURL(url),
+        500
+    );
+
+
+    toast("Backup berhasil dibuat");
+
+}
+
+
+/* =========================================
+   RESTORE
+========================================= */
+
+function restoreBackup(event){
+
+    const file=
+        event.target.files[0];
+
+
+    if(!file){
+        return;
+    }
+
+
+    const reader=
+        new FileReader();
+
+
+    reader.onload=function(){
+
+        try{
+
+            const parsed=
+                JSON.parse(
+                    reader.result
+                );
+
+
+            const restored=
+                parsed.data||
+                parsed;
+
+
+            const required=[
+                "classes",
+                "students",
+                "grades",
+                "tasks",
+                "attendance",
+                "schedules"
+            ];
+
+
+            const valid=
+                required.every(
+                    key=>
+                        Array.isArray(
+                            restored[key]
+                        )
+                );
+
+
+            if(!valid){
+                throw new Error(
+                    "Backup tidak valid"
+                );
+            }
+
+
+            if(
+                !confirm(
+                    "Restore akan mengganti data saat ini.\n\n"+
+                    "Lanjutkan?"
+                )
+            ){
+                event.target.value="";
+                return;
+            }
+
+
+            db={
+                classes:restored.classes||[],
+                students:restored.students||[],
+                grades:restored.grades||[],
+                tasks:restored.tasks||[],
+                attendance:restored.attendance||[],
+                schedules:restored.schedules||[],
+                notes:restored.notes||""
+            };
+
+
+            saveDB();
+
+            toast(
+                "Backup berhasil dipulihkan"
+            );
+
+
+        }catch(error){
+
+            alert(
+                "File backup tidak valid."
+            );
+
+        }
+
+
+        event.target.value="";
+
+    };
+
+
+    reader.readAsText(file);
+
+}
+
+
+/* =========================================
+   EXPORT CSV
+========================================= */
+
+function csvEscape(value){
+
+    return '"'+
+        String(value??"")
+        .replace(/"/g,'""')+
+        '"';
+
+}
+
+
+function exportCSV(){
+
+    if(!db.grades.length){
+
+        alert(
+            "Belum ada nilai untuk diekspor."
+        );
+
+        return;
+
+    }
+
+
+    const rows=[
+
+        [
+            "Nama Siswa",
+            "NIS/NISN",
+            "Kelas",
+            "Jenis Nilai",
+            "Nilai",
+            "KKM",
+            "Status",
+            "Tanggal"
+        ]
+
+    ];
+
+
+    db.grades.forEach(grade=>{
+
+        const student=
+            db.students.find(
+                item=>
+                    item.id===
+                    grade.studentId
+            );
+
+
+        const score=
+            Number(grade.score||0);
+
+
+        const kkm=
+            Number(grade.kkm||75);
+
+
+        rows.push([
+
+            student?.name||"",
+
+            student?.nis||"",
+
+            className(
+                student?.classId
+            ),
+
+            grade.kind||"",
+
+            score,
+
+            kkm,
+
+            score>=kkm
+                ?"Lulus"
+                :"Belum Lulus",
+
+            grade.date||""
+
+        ]);
+
+    });
+
+
+    const csv=
+        rows.map(
+            row=>
+                row.map(csvEscape).join(",")
+        ).join("\n");
+
+
+    const blob=new Blob(
+        ["\ufeff"+csv],
+        {
+            type:
+                "text/csv;charset=utf-8"
+        }
+    );
+
+
+    const url=
+        URL.createObjectURL(blob);
+
+
+    const link=
+        document.createElement("a");
+
+
+        link.href = url;
+
+    link.download =
+        "Nilai-Siswa-" +
+        today() +
+        ".csv";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(function(){
+
+        URL.revokeObjectURL(url);
+
+    },500);
+
+    toast(
+        "CSV berhasil dibuat"
+    );
+
+}
+
+
+/* =========================================
+   RESET SEMUA DATA
+========================================= */
+
+function resetAll(){
+
+    const confirmReset =
+        confirm(
+            "SEMUA DATA akan dihapus.\n\n" +
+            "Kelas, siswa, nilai, absensi, " +
+            "tugas, jadwal, profil dan catatan " +
+            "akan dihapus.\n\n" +
+            "Data yang sudah dihapus tidak dapat " +
+            "dikembalikan kecuali kamu memiliki backup.\n\n" +
+            "Lanjutkan?"
+        );
+
+    if(!confirmReset){
+
+        return;
+
+    }
+
+
+    db = defaultDB();
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+
+    localStorage.removeItem(
+        "LYZZ_THEME"
+    );
+
+
+    renderAll();
+
+    toast(
+        "Semua data telah dikosongkan"
+    );
+
+}
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+const themeButton =
+    document.getElementById(
+        "themeBtn"
+    );
+
+
+function setTheme(theme){
+
+    if(theme === "dark"){
+
+        document.body.dataset.dark = "1";
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--bg",
+                "#0b1020"
+            );
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--card",
+                "#151b2e"
+            );
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--text",
+                "#f3f4f6"
+            );
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--muted",
+                "#aab2c5"
+            );
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--border",
+                "#293149"
+            );
+
+        localStorage.setItem(
+            "LYZZ_THEME",
+            "dark"
+        );
+
+        if(themeButton){
+
+            themeButton.textContent =
+                "☀️ Tema";
+
+        }
+
+    }else{
+
+        document.body.dataset.dark = "0";
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--bg",
+                "#f5f7fb"
+            );
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--card",
+                "#ffffff"
+            );
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--text",
+                "#172033"
+            );
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--muted",
+                "#6b7280"
+            );
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--border",
+                "#e5e7eb"
+            );
+
+        localStorage.setItem(
+            "LYZZ_THEME",
+            "light"
+        );
+
+        if(themeButton){
+
+            themeButton.textContent =
+                "🌙 Tema";
+
+        }
+
+    }
+
+}
+
+
+if(themeButton){
+
+    themeButton.onclick =
+        function(){
+
+            const current =
+                localStorage.getItem(
+                    "LYZZ_THEME"
+                ) || "light";
+
+
+            setTheme(
+                current === "dark"
+                ? "light"
+                : "dark"
+            );
+
+        };
+
+}
+
+
+/* =========================================
+   MODAL CLICK OUTSIDE
+========================================= */
+
+const modal =
+    document.getElementById(
+        "modal"
+    );
+
+
+if(modal){
+
+    modal.addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target === modal
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   ESC UNTUK MENUTUP MODAL
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape"
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   CEK DATA DATABASE
+========================================= */
+
+function normalizeDB(data){
+
+    const base =
+        defaultDB();
+
+
+    if(
+        !data ||
+        typeof data !== "object"
+    ){
+
+        return base;
+
+    }
+
+
+    return {
+
+        classes:
+            Array.isArray(data.classes)
+            ? data.classes
+            : [],
+
+        students:
+            Array.isArray(data.students)
+            ? data.students
+            : [],
+
+        grades:
+            Array.isArray(data.grades)
+            ? data.grades
+            : [],
+
+        tasks:
+            Array.isArray(data.tasks)
+            ? data.tasks
+            : [],
+
+        attendance:
+            Array.isArray(data.attendance)
+            ? data.attendance
+            : [],
+
+        schedules:
+            Array.isArray(data.schedules)
+            ? data.schedules
+            : [],
+
+        notes:
+            typeof data.notes === "string"
+            ? data.notes
+            : ""
+
+    };
+
+}
+
+
+/* =========================================
+   PERBAIKI DATA LAMA
+========================================= */
+
+db =
+    normalizeDB(db);
+
+
+/* =========================================
+   SET TANGGAL ABSENSI
+========================================= */
+
+const attendanceDate =
+    document.getElementById(
+        "attDate"
+    );
+
+
+if(
+    attendanceDate &&
+    !attendanceDate.value
+){
+
+    attendanceDate.value =
+        today();
+
+}
+
+
+/* =========================================
+   SIMPAN SEBELUM MENINGGALKAN HALAMAN
+========================================= */
+
+window.addEventListener(
+    "beforeunload",
+    function(){
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(db)
+        );
+
+    }
+);
+
+
+/* =========================================
+   LOAD THEME
+========================================= */
+
+const savedTheme =
+    localStorage.getItem(
+        "LYZZ_THEME"
+    );
+
+
+if(savedTheme === "dark"){
+
+    setTheme("dark");
+
+}else{
+
+    setTheme("light");
+
+}
+
+
+/* =========================================
+   INITIAL RENDER
+========================================= */
+
+renderAll();
+
+
+/* =========================================
+   SET DEFAULT ATTENDANCE DATE
+========================================= */
+
+if(attendanceDate){
+
+    attendanceDate.value =
+        attendanceDate.value ||
+        today();
+
+}
+
+
+/* =========================================
+   HANDLE MODAL FORM
+========================================= */
+
+const modalForm =
+    document.getElementById(
+        "modalForm"
+    );
+
+
+if(modalForm){
+
+    modalForm.addEventListener(
+        "submit",
+        function(event){
+
+            event.preventDefault();
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   MOBILE / RESPONSIVE HELPER
+========================================= */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+        /*
+         * Layout utama sudah ditangani
+         * oleh CSS media query.
+         * Fungsi ini sengaja disediakan
+         * agar resize tidak menyebabkan
+         * error pada aplikasi.
+         */
+
+    }
+);
+
+
+/* =========================================
+   SERVICE WORKER TIDAK DIGUNAKAN
+========================================= */
+
+/*
+    Aplikasi ini sengaja dibuat tanpa
+    dependency eksternal.
+
+    Data utama tersimpan di localStorage.
+
+    Backup JSON tetap disediakan agar
+    data dapat dipindahkan secara manual.
+*/
+
+
+</script>
+
+</body>
+</html>
