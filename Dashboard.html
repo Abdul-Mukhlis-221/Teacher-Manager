@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0040)file:///D:/Musika/Teacher/dashboard.html -->
+<html lang="id" style="--bg: #0b1020; --card: #151b2e; --text: #f3f4f6; --muted: #aab2c5; --border: #293149;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>LYZZ Teacher Manager — v2</title>
 
@@ -609,9 +609,22 @@ input::placeholder,textarea::placeholder{color:#9aa4b2}
   .actions .btn{flex:1}
 }
 
+
+/* ===== FOTO & IMPORT EXCEL ===== */
+.photo-avatar{width:48px;height:48px;border-radius:14px;object-fit:cover;border:2px solid var(--border);background:linear-gradient(135deg,var(--primary),#9b8cff);display:block;box-shadow:0 4px 12px rgba(15,23,42,.10)}
+.photo-avatar.large{width:110px;height:110px;border-radius:28px;margin:auto}
+.photo-avatar.profile{width:96px;height:96px;border-radius:28px}
+.photo-placeholder{display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;background:linear-gradient(135deg,var(--primary),#9b8cff)}
+.photo-picker{display:flex;flex-direction:column;align-items:center;gap:10px;padding:16px;border:1px dashed var(--border);border-radius:16px;background:rgba(99,91,255,.04)}
+.import-box{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.import-help{font-size:12px;color:var(--muted);line-height:1.5}
+.student-name-cell{display:flex;align-items:center;gap:10px}
+.student-name-cell button{background:none;border:0;padding:0;text-align:left;color:inherit}
+@media(max-width:700px){.photo-picker{margin-bottom:5px}}
+
 </style>
 <style id="lyzz-modern-ui">
-:root{--primary:#6366f1;--primary2:#8b5cf6;--surface:rgba(255,255,255,.86);--shadow:0 14px 40px rgba(31,41,55,.08)}
+:root{--primary:#6366f1;--primary2:#8b5cf6;--surface:rgba(14, 0, 39, 0.062);--shadow:0 14px 40px rgba(31,41,55,.08)}
 *{box-sizing:border-box} body{background:radial-gradient(circle at 10% 0%,rgba(99,102,241,.10),transparent 30%),radial-gradient(circle at 100% 20%,rgba(139,92,246,.08),transparent 28%),var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
 .sidebar{background:linear-gradient(180deg,#111827 0%,#1e1b4b 55%,#312e81 100%);box-shadow:8px 0 30px rgba(15,23,42,.16);border-right:1px solid rgba(255,255,255,.08)}
 .brand{padding:26px 20px 22px}.brand-title{font-size:20px;font-weight:900;letter-spacing:-.5px}.brand-sub{opacity:.7;margin-top:5px;font-size:12px}
@@ -681,7 +694,7 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
 @media print{.sidebar,.topbar,.btn,.filters,.no-print{display:none!important}.main{margin:0!important;padding:0!important}.page{display:none!important}.page.active{display:block!important}.panel{box-shadow:none!important;border:0!important}.print-only{display:block}}
 </style></head>
 
-<body>
+<body data-dark="1">
 
 <aside class="sidebar">
     <div class="brand">
@@ -690,17 +703,17 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
     </div>
 
     <nav class="nav">
-        <button class="active" data-page="dashboard">🏠<br>Dashboard</button>
-        <button data-page="kelas">🏫<br>Kelas</button>
-        <button data-page="siswa">👨‍🎓<br>Siswa</button>
-        <button data-page="absensi">📋<br>Absensi</button>
-        <button data-page="nilai">📊<br>Nilai</button>
-        <button data-page="tugas">📝<br>Tugas</button>
-        <button data-page="jadwal">🗓️<br>Jadwal</button>
-        <button data-page="laporan">📑<br>Laporan</button>
-        <button data-page="profil">👤<br>Profil</button>
-        <button data-page="catatan">📌<br>Catatan</button>
-        <button data-page="backup">💾<br>Backup</button>
+        <button class="" data-page="dashboard">🏠<br>Dashboard</button>
+        <button data-page="kelas" class="">🏫<br>Kelas</button>
+        <button data-page="siswa" class="">👨‍🎓<br>Siswa</button>
+        <button data-page="absensi" class="">📋<br>Absensi</button>
+        <button data-page="nilai" class="">📊<br>Nilai</button>
+        <button data-page="tugas" class="">📝<br>Tugas</button>
+        <button data-page="jadwal" class="">🗓️<br>Jadwal</button>
+        <button data-page="laporan" class="">📑<br>Laporan</button>
+        <button data-page="profil" class="">👤<br>Profil</button>
+        <button data-page="catatan" class="">📌<br>Catatan</button>
+        <button data-page="backup" class="active">💾<br>Backup</button>
     </nav>
 </aside>
 
@@ -708,31 +721,31 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
 
 <header class="topbar">
     <div class="title">
-        <h1 id="pageTitle">Dashboard</h1>
-        <p id="pageSub">Ringkasan kegiatan mengajar</p>
+        <h1 id="pageTitle">Backup</h1>
+        <p id="pageSub">Simpan dan pindahkan data</p>
     </div>
 
-    <div class="actions">
-        <button class="btn" id="themeBtn">🌙 Tema</button>
+    <div class="actions"><div class="global-search"><input id="globalSearch" placeholder="Cari siswa, kelas, tugas..." autocomplete="off"><div id="globalSearchResults" class="search-results" hidden=""></div></div>
+        <button class="btn" id="themeBtn">☀️ Tema</button>
     </div>
 </header>
 
 <!-- DASHBOARD -->
-<section id="dashboard" class="page active">
+<section id="dashboard" class="page">
 
     <div class="grid">
 
         <div class="stat">
             <div class="stat-icon">🏫</div>
             <div class="stat-label">Total Kelas</div>
-            <div class="stat-value" id="statClasses">0</div>
+            <div class="stat-value" id="statClasses">3</div>
             <div class="stat-extra">Kelas terdaftar</div>
         </div>
 
         <div class="stat">
             <div class="stat-icon">👨‍🎓</div>
             <div class="stat-label">Total Siswa</div>
-            <div class="stat-value" id="statStudents">0</div>
+            <div class="stat-value" id="statStudents">41</div>
             <div class="stat-extra">Siswa terdaftar</div>
         </div>
 
@@ -746,7 +759,7 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
         <div class="stat">
             <div class="stat-icon">📊</div>
             <div class="stat-label">Rata-rata Nilai</div>
-            <div class="stat-value" id="statAvg">0</div>
+            <div class="stat-value" id="statAvg">0.0</div>
             <div class="stat-extra">Dari semua nilai</div>
         </div>
 
@@ -796,7 +809,28 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
 
     </div>
 
-</section>
+<div id="proDashboard">
+    <div class="pro-hero">
+      <div><h2>✨ Selamat datang di LYZZ Teacher Manager</h2><p>Guru · Sekolah belum diatur · Mata pelajaran belum diatur</p></div>
+      <button class="btn primary" onclick="showPage('profil')">⚙ Kelola Profil</button>
+    </div>
+    <div class="pro-grid">
+      <div class="pro-mini"><small>Kelulusan</small><strong>0%</strong><div class="pro-bar"><i style="width:0%"></i></div></div>
+      <div class="pro-mini"><small>Kehadiran</small><strong>100%</strong><div class="pro-bar"><i style="width:100%"></i></div></div>
+      <div class="pro-mini"><small>Di bawah KKM</small><strong>0</strong><small>Semua aman 🎉</small></div>
+      <div class="pro-mini"><small>Total Aktivitas</small><strong>1</strong><small>Nilai + absensi + tugas</small></div>
+    </div>
+    <div class="dashboard-grid">
+      <div class="panel"><div class="panel-head"><h2>🔔 Pusat Perhatian</h2><button class="btn small" onclick="proRequestNotify()">🔔 Notifikasi</button></div><div class="notice-pro"><span class="ni">👤</span><div><strong>Profil guru belum lengkap</strong><small>Lengkapi profil agar laporan lebih profesional.</small><br><button class="btn small" style="margin-top:6px" onclick="showPage('profil')">Buka</button></div></div><div class="notice-pro"><span class="ni">📊</span><div><strong>Belum ada nilai</strong><small>Mulai input nilai untuk melihat analitik.</small><br><button class="btn small" style="margin-top:6px" onclick="showPage('nilai')">Buka</button></div></div></div>
+      <div class="panel"><div class="panel-head"><h2>🏆 Siswa Terbaik</h2><button class="btn small" onclick="showPage('laporan')">Lihat Semua</button></div>
+        <div class="empty">
+            <div class="empty-icon">🏆</div>
+            Belum ada data ranking.
+        </div>
+    </div>
+    </div>
+    <div class="panel"><div class="panel-head"><h2>⏱️ Countdown Deadline</h2><button class="btn small" onclick="showPage('tugas')">Kelola Tugas</button></div><div class="notice-pro"><span class="ni">🎯</span><div><strong>Belum ada deadline aktif</strong><small>Tambahkan tugas untuk mengaktifkan pengingat.</small></div></div></div>
+  </div></section>
 
 <!-- KELAS -->
 <section id="kelas" class="page">
@@ -805,7 +839,130 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
             <h2>Daftar Kelas</h2>
             <button class="btn primary" onclick="openModal('class')">＋ Tambah Kelas</button>
         </div>
-        <div id="classCards" class="cards"></div>
+        <div id="classCards" class="cards">
+        <div class="class-card">
+
+            <span class="badge">
+                MTK
+            </span>
+
+            <h3>
+                7
+            </h3>
+
+            <p>
+                📍 7
+            </p>
+
+            <p>
+                👨‍🎓 6 siswa
+            </p>
+
+            <p>
+                📊 Rata-rata 0.0
+            </p>
+
+            <div style="
+                margin-top:14px;
+                display:flex;
+                gap:7px;
+                flex-wrap:wrap;
+            ">
+
+                <button class="btn small" onclick="edit('class','muutgc5ayhbljz')">
+                    ✏️ Edit
+                </button>
+
+                <button class="btn small danger" onclick="remove('class','muutgc5ayhbljz')">
+                    🗑️ Hapus
+                </button>
+
+            </div>
+
+        </div>
+        
+        <div class="class-card">
+
+            <span class="badge">
+                MTK
+            </span>
+
+            <h3>
+                5
+            </h3>
+
+            <p>
+                📍 5
+            </p>
+
+            <p>
+                👨‍🎓 23 siswa
+            </p>
+
+            <p>
+                📊 Rata-rata 0.0
+            </p>
+
+            <div style="
+                margin-top:14px;
+                display:flex;
+                gap:7px;
+                flex-wrap:wrap;
+            ">
+
+                <button class="btn small" onclick="edit('class','muutxo33jshnxq')">
+                    ✏️ Edit
+                </button>
+
+                <button class="btn small danger" onclick="remove('class','muutxo33jshnxq')">
+                    🗑️ Hapus
+                </button>
+
+            </div>
+
+        </div>
+        
+        <div class="class-card">
+
+            <span class="badge">
+                MTK
+            </span>
+
+            <h3>
+                3
+            </h3>
+
+            <p>
+                📍 3
+            </p>
+
+            <p>
+                👨‍🎓 12 siswa
+            </p>
+
+            <p>
+                📊 Rata-rata 0.0
+            </p>
+
+            <div style="
+                margin-top:14px;
+                display:flex;
+                gap:7px;
+                flex-wrap:wrap;
+            ">
+
+                <button class="btn small" onclick="edit('class','muutxzon8g6aju')">
+                    ✏️ Edit
+                </button>
+
+                <button class="btn small danger" onclick="remove('class','muutxzon8g6aju')">
+                    🗑️ Hapus
+                </button>
+
+            </div>
+
+        </div>
+        </div>
     </div>
 </section>
 
@@ -815,14 +972,33 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
 
         <div class="panel-head">
             <h2>Data Siswa</h2>
-            <button class="btn primary" onclick="openModal('student')">＋ Tambah Siswa</button>
+            <div class="actions">
+                <button class="btn primary" onclick="openModal('student')">＋ Tambah Siswa</button>
+                <button class="btn success" onclick="document.getElementById('studentExcelFile').click()">📥 Import Excel</button>
+                <button class="btn info" onclick="downloadStudentTemplate()">📄 Template Excel</button>
+                <input id="studentExcelFile" type="file" accept=".xlsx,.xls,.csv" hidden="" onchange="importStudentsExcel(event)">
+            </div>
         </div>
 
         <div class="filters">
             <input id="studentSearch" placeholder="🔎 Cari nama / NIS..." oninput="renderStudents()">
             <select id="studentClassFilter" onchange="renderStudents()">
-                <option value="">Semua kelas</option>
-            </select>
+            <option value="">Semua kelas</option>
+
+            
+                    <option value="muutgc5ayhbljz">
+                        7
+                    </option>
+                
+                    <option value="muutxo33jshnxq">
+                        5
+                    </option>
+                
+                    <option value="muutxzon8g6aju">
+                        3
+                    </option>
+                
+        </select>
             <select id="studentGenderFilter" onchange="renderStudents()">
                 <option value="">Semua gender</option>
                 <option value="L">Laki-laki</option>
@@ -830,7 +1006,171 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
             </select>
         </div>
 
-        <div id="studentsTable" class="table-wrap"></div>
+        <div id="studentsTable" class="table-wrap"><table><thead><tr><th>Foto / Nama</th><th>NIS/NISN</th><th>L/P</th><th>Kelas</th><th>No. HP</th><th>Aksi</th></tr></thead><tbody><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutgc5atim4i6')"><b>ABIZARD DILLA AL-AFANDI</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3131948711</td><td>L</td><td>7</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutgc5atim4i6')">✏️</button> <button class="btn small danger" onclick="remove('student','muutgc5atim4i6')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutgc5ak5y4oe')"><b>ADITYA PUTRA PRASETYO</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>0136925903</td><td>L</td><td>7</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutgc5ak5y4oe')">✏️</button> <button class="btn small danger" onclick="remove('student','muutgc5ak5y4oe')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutgc5almx66q')"><b>AR RAYYAN MUHAMMAD</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3139111745</td><td>L</td><td>7</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutgc5almx66q')">✏️</button> <button class="btn small danger" onclick="remove('student','muutgc5almx66q')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">I</div><button onclick="showStudentCard('muutgc5a6xhvrg')"><b>IQBAL MAULANA</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>0139588975</td><td>L</td><td>7</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutgc5a6xhvrg')">✏️</button> <button class="btn small danger" onclick="remove('student','muutgc5a6xhvrg')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">M</div><button onclick="showStudentCard('muutgc5acoekje')"><b>MUHAMMAD KHATAMI</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3135081943</td><td>L</td><td>7</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutgc5acoekje')">✏️</button> <button class="btn small danger" onclick="remove('student','muutgc5acoekje')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">S</div><button onclick="showStudentCard('muutgc5ap598lo')"><b>Septian Abdunnafi</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>0131009808</td><td>L</td><td>7</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutgc5ap598lo')">✏️</button> <button class="btn small danger" onclick="remove('student','muutgc5ap598lo')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutxo33e0ub3k')"><b>ABDULLAH ANWAR RABANI</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3157660631</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33e0ub3k')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33e0ub3k')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutxo33oij8sp')"><b>ADHY MAJDI SYAM</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3147214168</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33oij8sp')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33oij8sp')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutxo330ko6yn')"><b>ALESHA PUTRI</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3162351681</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo330ko6yn')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo330ko6yn')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutxo33g0gfry')"><b>Aralyn Raisa Syarif</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>0161566595</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33g0gfry')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33g0gfry')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutxo33ootvfw')"><b>AZKA HUSAIN MAULANA</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3151848328</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33ootvfw')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33ootvfw')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">F</div><button onclick="showStudentCard('muutxo33yykqi5')"><b>FIKA HARTIANE</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3130665289</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33yykqi5')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33yykqi5')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">F</div><button onclick="showStudentCard('muutxo337qpnxd')"><b>FIRDA PUTRI JELITA</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3131286948</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo337qpnxd')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo337qpnxd')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">H</div><button onclick="showStudentCard('muutxo335ouody')"><b>HANIF ARSALAN</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3159782344</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo335ouody')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo335ouody')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">H</div><button onclick="showStudentCard('muutxo33be9qlb')"><b>HUSEIN TARA MIRZA</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>0141976110</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33be9qlb')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33be9qlb')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">I</div><button onclick="showStudentCard('muutxo33eijz0s')"><b>IASHA SANDRIANA MECCA</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3164204523</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33eijz0s')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33eijz0s')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">K</div><button onclick="showStudentCard('muutxo33ea7udm')"><b>KHAIRANA AZKA SAKHI</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3159863419</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33ea7udm')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33ea7udm')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">L</div><button onclick="showStudentCard('muutxo33suazkd')"><b>Lanisa Aura Sahra</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3145831911</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33suazkd')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33suazkd')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">L</div><button onclick="showStudentCard('muutxo33mexjd7')"><b>LUTPI AZKIA</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3154520455</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33mexjd7')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33mexjd7')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">M</div><button onclick="showStudentCard('muutxo333h3jpu')"><b>MUHAMAD MARIO ILHAM</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3157377083</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo333h3jpu')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo333h3jpu')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">M</div><button onclick="showStudentCard('muutxo337t4eh8')"><b>MUHAMMAD ALVIN YASIR</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3140164988</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo337t4eh8')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo337t4eh8')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">M</div><button onclick="showStudentCard('muutxo33wr5bnk')"><b>MUHAMMAD RASYA KADAFI</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3152551939</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33wr5bnk')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33wr5bnk')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">N</div><button onclick="showStudentCard('muutxo33hfs2e1')"><b>Nadia Humairani</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3134834150</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33hfs2e1')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33hfs2e1')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">S</div><button onclick="showStudentCard('muutxo33ea4qfr')"><b>SALMAN AL FARIZI</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3145305450</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33ea4qfr')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33ea4qfr')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">S</div><button onclick="showStudentCard('muutxo337kidl4')"><b>SALSABILA RAISAH KALANI</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3167592305</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo337kidl4')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo337kidl4')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">S</div><button onclick="showStudentCard('muutxo33eeydus')"><b>SISKA</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3142627956</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33eeydus')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33eeydus')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">S</div><button onclick="showStudentCard('muutxo33xrfyyr')"><b>Siti Fatimatus Zahro</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3150193262</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33xrfyyr')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33xrfyyr')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">S</div><button onclick="showStudentCard('muutxo338rkm16')"><b>SYUKRON HABIBI</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3159814832</td><td>L</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo338rkm16')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo338rkm16')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">W</div><button onclick="showStudentCard('muutxo33qhhe2x')"><b>WILLI RAHMADANI</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3135736913</td><td>P</td><td>5</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxo33qhhe2x')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxo33qhhe2x')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutxzon84z25e')"><b>ADWA NANDHIA BALU</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3178073624</td><td>L</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzon84z25e')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzon84z25e')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutxzonvw26yb')"><b>Alifa Asyalina Putri</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3173122097</td><td>P</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzonvw26yb')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzonvw26yb')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutxzon5oniu0')"><b>Annasya Arunika</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3176803006</td><td>P</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzon5oniu0')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzon5oniu0')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutxzon9tqrb9')"><b>Assyifatu Haifa</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3172288976</td><td>P</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzon9tqrb9')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzon9tqrb9')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">A</div><button onclick="showStudentCard('muutxzonolxmx0')"><b>Aulia Putri</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3178694588</td><td>P</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzonolxmx0')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzonolxmx0')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">F</div><button onclick="showStudentCard('muutxzonlgs0lh')"><b>Fabian Akbar Syahbani</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3171856143</td><td>L</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzonlgs0lh')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzonlgs0lh')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">L</div><button onclick="showStudentCard('muutxzonm7rja6')"><b>Lintang Cahya Galaksi</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3176261568</td><td>L</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzonm7rja6')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzonm7rja6')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">M</div><button onclick="showStudentCard('muutxzon0cnp3a')"><b>Muhammad Fatih Hamizan</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3177582788</td><td>L</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzon0cnp3a')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzon0cnp3a')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">N</div><button onclick="showStudentCard('muutxzon3yvs3k')"><b>NASHILA AMELIA</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3161585129</td><td>P</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzon3yvs3k')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzon3yvs3k')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">R</div><button onclick="showStudentCard('muutxzon3tlrit')"><b>Reysha Nur Rizki</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3187160207</td><td>P</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzon3tlrit')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzon3tlrit')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">S</div><button onclick="showStudentCard('muutxzonrwb1tw')"><b>Salwa Faradiba</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3188810500</td><td>P</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzonrwb1tw')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzonrwb1tw')">🗑️</button></td>
+    </tr><tr>
+      <td><div class="student-name-cell"><div class="photo-avatar photo-placeholder">Z</div><button onclick="showStudentCard('muutxzonpbg9oa')"><b>Zaida Azqia Alfathunnisa</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>3175893007</td><td>P</td><td>3</td><td>-</td>
+      <td><button class="btn small view-student" title="Detail siswa">👁️</button><button class="btn small" onclick="edit('student','muutxzonpbg9oa')">✏️</button> <button class="btn small danger" onclick="remove('student','muutxzonpbg9oa')">🗑️</button></td>
+    </tr></tbody></table></div>
     </div>
 </section>
 
@@ -844,21 +1184,1498 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
         </div>
 
         <div class="filters">
-            <select id="attClass" onchange="renderAttendance()"></select>
+            <select id="attClass" onchange="renderAttendance()">
+                    <option value="muutgc5ayhbljz">
+                        7
+                    </option>
+                
+                    <option value="muutxo33jshnxq">
+                        5
+                    </option>
+                
+                    <option value="muutxzon8g6aju">
+                        3
+                    </option>
+                </select>
             <input type="date" id="attDate" onchange="renderAttendance()">
         </div>
 
         <div id="attendanceSummary"></div>
-        <div id="attendanceTable" class="table-wrap"></div>
+        <div id="attendanceTable" class="table-wrap">
+    <table>
+
+        <thead>
+            <tr>
+                <th>Siswa</th>
+                <th>Status Kehadiran</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            
+                    <tr>
+
+                        <td>
+                            <b>ABIZARD DILLA AL-AFANDI</b>
+                        </td>
+
+                        <td>
+
+                            <div class="radio-row">
+
+                                
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5atim4i6" value="Hadir" checked="" onchange="
+                                                    setAttendance(
+                                                        'muutgc5atim4i6',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Hadir'
+                                                    )
+                                                ">
+
+                                            Hadir
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5atim4i6" value="Izin" onchange="
+                                                    setAttendance(
+                                                        'muutgc5atim4i6',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Izin'
+                                                    )
+                                                ">
+
+                                            Izin
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5atim4i6" value="Sakit" onchange="
+                                                    setAttendance(
+                                                        'muutgc5atim4i6',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Sakit'
+                                                    )
+                                                ">
+
+                                            Sakit
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5atim4i6" value="Alpa" onchange="
+                                                    setAttendance(
+                                                        'muutgc5atim4i6',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Alpa'
+                                                    )
+                                                ">
+
+                                            Alpa
+
+                                        </label>
+
+                                    
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                    
+                    <tr>
+
+                        <td>
+                            <b>ADITYA PUTRA PRASETYO</b>
+                        </td>
+
+                        <td>
+
+                            <div class="radio-row">
+
+                                
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5ak5y4oe" value="Hadir" checked="" onchange="
+                                                    setAttendance(
+                                                        'muutgc5ak5y4oe',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Hadir'
+                                                    )
+                                                ">
+
+                                            Hadir
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5ak5y4oe" value="Izin" onchange="
+                                                    setAttendance(
+                                                        'muutgc5ak5y4oe',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Izin'
+                                                    )
+                                                ">
+
+                                            Izin
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5ak5y4oe" value="Sakit" onchange="
+                                                    setAttendance(
+                                                        'muutgc5ak5y4oe',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Sakit'
+                                                    )
+                                                ">
+
+                                            Sakit
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5ak5y4oe" value="Alpa" onchange="
+                                                    setAttendance(
+                                                        'muutgc5ak5y4oe',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Alpa'
+                                                    )
+                                                ">
+
+                                            Alpa
+
+                                        </label>
+
+                                    
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                    
+                    <tr>
+
+                        <td>
+                            <b>AR RAYYAN MUHAMMAD</b>
+                        </td>
+
+                        <td>
+
+                            <div class="radio-row">
+
+                                
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5almx66q" value="Hadir" checked="" onchange="
+                                                    setAttendance(
+                                                        'muutgc5almx66q',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Hadir'
+                                                    )
+                                                ">
+
+                                            Hadir
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5almx66q" value="Izin" onchange="
+                                                    setAttendance(
+                                                        'muutgc5almx66q',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Izin'
+                                                    )
+                                                ">
+
+                                            Izin
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5almx66q" value="Sakit" onchange="
+                                                    setAttendance(
+                                                        'muutgc5almx66q',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Sakit'
+                                                    )
+                                                ">
+
+                                            Sakit
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5almx66q" value="Alpa" onchange="
+                                                    setAttendance(
+                                                        'muutgc5almx66q',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Alpa'
+                                                    )
+                                                ">
+
+                                            Alpa
+
+                                        </label>
+
+                                    
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                    
+                    <tr>
+
+                        <td>
+                            <b>IQBAL MAULANA</b>
+                        </td>
+
+                        <td>
+
+                            <div class="radio-row">
+
+                                
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5a6xhvrg" value="Hadir" checked="" onchange="
+                                                    setAttendance(
+                                                        'muutgc5a6xhvrg',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Hadir'
+                                                    )
+                                                ">
+
+                                            Hadir
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5a6xhvrg" value="Izin" onchange="
+                                                    setAttendance(
+                                                        'muutgc5a6xhvrg',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Izin'
+                                                    )
+                                                ">
+
+                                            Izin
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5a6xhvrg" value="Sakit" onchange="
+                                                    setAttendance(
+                                                        'muutgc5a6xhvrg',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Sakit'
+                                                    )
+                                                ">
+
+                                            Sakit
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5a6xhvrg" value="Alpa" onchange="
+                                                    setAttendance(
+                                                        'muutgc5a6xhvrg',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Alpa'
+                                                    )
+                                                ">
+
+                                            Alpa
+
+                                        </label>
+
+                                    
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                    
+                    <tr>
+
+                        <td>
+                            <b>MUHAMMAD KHATAMI</b>
+                        </td>
+
+                        <td>
+
+                            <div class="radio-row">
+
+                                
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5acoekje" value="Hadir" checked="" onchange="
+                                                    setAttendance(
+                                                        'muutgc5acoekje',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Hadir'
+                                                    )
+                                                ">
+
+                                            Hadir
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5acoekje" value="Izin" onchange="
+                                                    setAttendance(
+                                                        'muutgc5acoekje',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Izin'
+                                                    )
+                                                ">
+
+                                            Izin
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5acoekje" value="Sakit" onchange="
+                                                    setAttendance(
+                                                        'muutgc5acoekje',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Sakit'
+                                                    )
+                                                ">
+
+                                            Sakit
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5acoekje" value="Alpa" onchange="
+                                                    setAttendance(
+                                                        'muutgc5acoekje',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Alpa'
+                                                    )
+                                                ">
+
+                                            Alpa
+
+                                        </label>
+
+                                    
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                    
+                    <tr>
+
+                        <td>
+                            <b>Septian Abdunnafi</b>
+                        </td>
+
+                        <td>
+
+                            <div class="radio-row">
+
+                                
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5ap598lo" value="Hadir" checked="" onchange="
+                                                    setAttendance(
+                                                        'muutgc5ap598lo',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Hadir'
+                                                    )
+                                                ">
+
+                                            Hadir
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5ap598lo" value="Izin" onchange="
+                                                    setAttendance(
+                                                        'muutgc5ap598lo',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Izin'
+                                                    )
+                                                ">
+
+                                            Izin
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5ap598lo" value="Sakit" onchange="
+                                                    setAttendance(
+                                                        'muutgc5ap598lo',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Sakit'
+                                                    )
+                                                ">
+
+                                            Sakit
+
+                                        </label>
+
+                                    
+
+                                        <label class="radio">
+
+                                            <input type="radio" name="att_muutgc5ap598lo" value="Alpa" onchange="
+                                                    setAttendance(
+                                                        'muutgc5ap598lo',
+                                                        'muutgc5ayhbljz',
+                                                        '2026-10-05',
+                                                        'Alpa'
+                                                    )
+                                                ">
+
+                                            Alpa
+
+                                        </label>
+
+                                    
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                    
+
+        </tbody>
+
+    </table>
+    </div>
     </div>
 
     <div class="panel">
         <div class="panel-head">
             <h2>📋 Rekap Kehadiran</h2>
         </div>
-        <div id="attendanceReport" class="table-wrap"></div>
+        <div id="attendanceReport" class="table-wrap">
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Siswa</th>
+                    <th>Hadir</th>
+                    <th>Izin</th>
+                    <th>Sakit</th>
+                    <th>Alpa</th>
+                    <th>Total</th>
+                    <th>Kehadiran</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                
+                        <tr>
+
+                            <td>
+                                <b>ABIZARD DILLA AL-AFANDI</b>
+                            </td>
+
+                            <td>1</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>1</td>
+
+                            <td>
+                                100.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>ADITYA PUTRA PRASETYO</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>AR RAYYAN MUHAMMAD</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>IQBAL MAULANA</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>MUHAMMAD KHATAMI</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Septian Abdunnafi</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>ABDULLAH ANWAR RABANI</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>ADHY MAJDI SYAM</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>ALESHA PUTRI</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Aralyn Raisa Syarif</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>AZKA HUSAIN MAULANA</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>FIKA HARTIANE</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>FIRDA PUTRI JELITA</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>HANIF ARSALAN</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>HUSEIN TARA MIRZA</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>IASHA SANDRIANA MECCA</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>KHAIRANA AZKA SAKHI</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Lanisa Aura Sahra</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>LUTPI AZKIA</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>MUHAMAD MARIO ILHAM</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>MUHAMMAD ALVIN YASIR</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>MUHAMMAD RASYA KADAFI</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Nadia Humairani</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>SALMAN AL FARIZI</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>SALSABILA RAISAH KALANI</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>SISKA</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Siti Fatimatus Zahro</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>SYUKRON HABIBI</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>WILLI RAHMADANI</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>ADWA NANDHIA BALU</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Alifa Asyalina Putri</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Annasya Arunika</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Assyifatu Haifa</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Aulia Putri</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Fabian Akbar Syahbani</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Lintang Cahya Galaksi</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Muhammad Fatih Hamizan</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>NASHILA AMELIA</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Reysha Nur Rizki</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Salwa Faradiba</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+                        <tr>
+
+                            <td>
+                                <b>Zaida Azqia Alfathunnisa</b>
+                            </td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>0</td>
+
+                            <td>
+                                0.0%
+                            </td>
+
+                        </tr>
+                        
+
+            </tbody>
+
+        </table>
+
     </div>
-</section>
+
+    </div>
+    </div>
+<div id="proAttendanceExtra"><div class="panel"><div class="panel-head"><h2>📊 Statistik Kehadiran</h2></div><div class="pro-grid"><div class="pro-mini"><small>Hadir</small><strong>1</strong></div><div class="pro-mini"><small>Izin</small><strong>0</strong></div><div class="pro-mini"><small>Sakit</small><strong>0</strong></div><div class="pro-mini"><small>Alpa</small><strong>0</strong></div></div><div class="pro-bar"><i style="width:100%"></i></div><small style="color:var(--muted)">100% kehadiran tercatat</small></div></div></section>
 
 <!-- NILAI -->
 <section id="nilai" class="page">
@@ -884,7 +2701,12 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
             </select>
         </div>
 
-        <div id="gradesTable" class="table-wrap"></div>
+        <div id="gradesTable" class="table-wrap">
+        <div class="empty">
+            <div class="empty-icon">📭</div>
+            Belum ada nilai.
+        </div>
+    </div>
     </div>
 </section>
 
@@ -907,7 +2729,12 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
             </select>
         </div>
 
-        <div id="tasksTable" class="table-wrap"></div>
+        <div id="tasksTable" class="table-wrap">
+        <div class="empty">
+            <div class="empty-icon">📭</div>
+            Belum ada tugas.
+        </div>
+    </div>
     </div>
 </section>
 
@@ -920,7 +2747,12 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
             <button class="btn primary" onclick="openModal('schedule')">＋ Tambah Jadwal</button>
         </div>
 
-        <div id="scheduleTable" class="table-wrap"></div>
+        <div id="scheduleTable" class="table-wrap">
+        <div class="empty">
+            <div class="empty-icon">📭</div>
+            Belum ada jadwal.
+        </div>
+    </div>
     </div>
 </section>
 
@@ -950,7 +2782,17 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
         <div id="classReport" class="table-wrap"></div>
     </div>
 
-</section>
+<div id="proReportExtra"><div class="panel"><div class="panel-head"><h2>🏆 Ranking Siswa</h2><button class="btn" onclick="window.print()">🖨 Cetak Laporan</button></div>
+        <div class="empty">
+            <div class="empty-icon">🏆</div>
+            Belum ada data ranking.
+        </div>
+    </div><div class="panel"><div class="panel-head"><h2>📌 Siswa Perlu Perhatian</h2></div>
+        <div class="empty">
+            <div class="empty-icon">🎉</div>
+            Tidak ada siswa di bawah KKM.
+        </div>
+    </div></div></section>
 
 <!-- PROFIL -->
 <section id="profil" class="page">
@@ -962,7 +2804,13 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
         </div>
 
         <div class="profile-box">
-            <div class="avatar" id="profileAvatar">G</div>
+            <div class="photo-picker">
+                <img id="profileAvatarImg" class="photo-avatar profile" alt="Foto Profil" hidden="" src="file:///D:/Musika/Teacher/dashboard.html">
+                <div class="avatar" id="profileAvatar">G</div>
+                <button type="button" class="btn small" onclick="document.getElementById('profilePhotoInput').click()">📷 Pilih Foto</button>
+                <button type="button" class="btn small danger" onclick="removeProfilePhoto()">✕ Hapus Foto</button>
+                <input id="profilePhotoInput" type="file" accept="image/*" hidden="" onchange="pickProfilePhoto(this)">
+            </div>
 
             <div class="form-grid">
 
@@ -1002,7 +2850,7 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
             </div>
         </div>
     </div>
-</section>
+<div id="proProfileSettings" class="panel"><div class="panel-head"><h2>⚙ Pengaturan Akademik</h2><div class="actions"><button class="btn" onclick="openWeightModal()">⚖ Atur Bobot Nilai</button><button class="btn primary" onclick="proSaveAcademic()">💾 Simpan</button></div></div><div class="form-grid"><div class="field"><label>KKM Default</label><input id="proKKM" type="number" min="0" max="100" value="75"></div></div><div class="pro-grid"><div class="pro-mini"><small>Tugas</small><strong>20%</strong></div><div class="pro-mini"><small>Quiz</small><strong>15%</strong></div><div class="pro-mini"><small>UTS</small><strong>25%</strong></div><div class="pro-mini"><small>UAS</small><strong>30%</strong></div></div><small style="color:var(--muted)">KKM menjadi acuan default untuk status kelulusan. Bobot dapat disesuaikan melalui tombol Atur Bobot Nilai.</small></div></section>
 
 <!-- CATATAN -->
 <section id="catatan" class="page">
@@ -1023,12 +2871,12 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
 </section>
 
 <!-- BACKUP -->
-<section id="backup" class="page">
+<section id="backup" class="page active">
 
     <div class="panel">
 
         <div class="panel-head">
-            <h2>💾 Backup & Data</h2>
+            <h2>💾 Backup &amp; Data</h2>
         </div>
 
         <div class="notice">
@@ -1044,7 +2892,12 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
             <button class="btn danger" onclick="resetAll()">🗑️ Hapus Semua Data</button>
         </div>
 
-        <input id="restoreFile" type="file" accept=".json" hidden onchange="restoreBackup(event)">
+        <input id="restoreFile" type="file" accept=".json" hidden="" onchange="restoreBackup(event)">
+
+        <div class="notice" style="margin-top:14px">
+            <strong>Import siswa dari Excel</strong>
+            <small>Gunakan tombol <b>Import Excel</b> di menu Data Siswa. Kolom template sudah disiapkan agar data nama, NIS/NISN, gender, kelas, nomor HP, dan catatan dapat masuk otomatis.</small>
+        </div>
 
     </div>
 
@@ -1052,7 +2905,23 @@ tbody td{border-top:1px solid transparent!important;border-bottom:1px solid tran
         <div class="panel-head">
             <h2>Informasi Penyimpanan</h2>
         </div>
-        <div id="storageInfo"></div>
+        <div id="storageInfo"><div class="storage-grid">
+      <div class="storage-item"><small>Kelas</small><strong>3</strong></div>
+    
+      <div class="storage-item"><small>Siswa</small><strong>41</strong></div>
+    
+      <div class="storage-item"><small>Nilai</small><strong>0</strong></div>
+    
+      <div class="storage-item"><small>Tugas</small><strong>0</strong></div>
+    
+      <div class="storage-item"><small>Absensi</small><strong>1</strong></div>
+    
+      <div class="storage-item"><small>Jadwal</small><strong>0</strong></div>
+    
+      <div class="storage-item"><small>Catatan</small><strong>0</strong></div>
+    
+      <div class="storage-item"><small>Profil</small><strong>0</strong></div>
+    </div></div>
     </div>
 
 </section>
@@ -1098,7 +2967,8 @@ function defaultDB(){
             school:"",
             subject:"",
             year:"",
-            semester:"Ganjil"
+            semester:"Ganjil",
+            photo:""
         },
         weights:{
             Tugas:20,
@@ -1335,6 +3205,7 @@ function getFinalScoreForStudent(studentId){
 ========================= */
 function saveProfile(){
     db.profile={
+        ...db.profile,
         name:document.getElementById("profileName")?.value.trim()||"",
         nip:document.getElementById("profileNip")?.value.trim()||"",
         school:document.getElementById("profileSchool")?.value.trim()||"",
@@ -1342,31 +3213,45 @@ function saveProfile(){
         year:document.getElementById("profileYear")?.value.trim()||"",
         semester:document.getElementById("profileSemester")?.value||"Ganjil"
     };
+    if(window.pendingProfilePhoto!==undefined) db.profile.photo=window.pendingProfilePhoto;
     saveDB();
     updateProfileUI();
     toast("Profil berhasil disimpan");
 }
 
+function pickProfilePhoto(input){
+    const file=input?.files?.[0];
+    if(!file) return;
+    if(file.size>2*1024*1024){ alert("Ukuran foto maksimal 2 MB."); input.value=""; return; }
+    const reader=new FileReader();
+    reader.onload=e=>{ window.pendingProfilePhoto=e.target.result; updateProfileUI(); toast("Foto profil dipilih. Klik Simpan Profil."); };
+    reader.readAsDataURL(file);
+}
+
+function removeProfilePhoto(){ window.pendingProfilePhoto=""; db.profile.photo=""; saveDB(); updateProfileUI(); toast("Foto profil dihapus"); }
+
+
 function updateProfileUI(){
     const p=db.profile||{};
     const fields={
-        profileName:p.name||"",
-        profileNip:p.nip||"",
-        profileSchool:p.school||"",
-        profileSubject:p.subject||"",
-        profileYear:p.year||"",
-        profileSemester:p.semester||"Ganjil"
+        profileName:p.name||"", profileNip:p.nip||"", profileSchool:p.school||"",
+        profileSubject:p.subject||"", profileYear:p.year||"", profileSemester:p.semester||"Ganjil"
     };
     Object.entries(fields).forEach(([id,value])=>{
         const el=document.getElementById(id);
         if(el && document.activeElement!==el) el.value=value;
     });
+    const photo=window.pendingProfilePhoto!==undefined?window.pendingProfilePhoto:(p.photo||"");
+    const img=document.getElementById("profileAvatarImg");
     const avatar=document.getElementById("profileAvatar");
+    if(img){ img.src=photo||""; img.hidden=!photo; }
     if(avatar){
+        avatar.hidden=!!photo;
         const name=(p.name||"Guru").trim();
         avatar.textContent=name.charAt(0).toUpperCase()||"G";
     }
 }
+
 
 /* =========================
    BOBOT NILAI
@@ -1419,6 +3304,10 @@ function openWeightModal(){
 function openModal(type,id=null){
     currentType=type;
     editId=id;
+    if(type==="student"){
+        const old=id?getObject("student",id):null;
+        window.pendingStudentPhoto=old?.photo||"";
+    }
 
     const object=id ? getObject(type,id):null;
 
@@ -1466,6 +3355,16 @@ function openModal(type,id=null){
             <div class="field full">
                 <label>Nama Lengkap *</label>
                 <input name="name" required value="${esc(object?.name)}" placeholder="Nama siswa">
+            </div>
+
+            <div class="field full">
+                <label>Foto Siswa</label>
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                    <div id="studentPhotoPreview"></div>
+                    <input id="studentPhotoInput" type="file" accept="image/*" onchange="pickStudentPhoto(this)">
+                    <button type="button" class="btn small danger" onclick="removeStudentPhoto()">✕ Hapus</button>
+                </div>
+                <small style="color:var(--muted)">JPG/PNG/WebP, maksimal 2 MB.</small>
             </div>
 
             <div class="field">
@@ -1774,6 +3673,7 @@ document.getElementById("modalForm").innerHTML=form;
 document.getElementById("modalForm").onsubmit=submitModal;
 
 document.getElementById("modal").classList.add("show");
+    if(type==="student") setTimeout(renderStudentPhotoPreview,0);
 
 }
 
@@ -1879,6 +3779,7 @@ function submitModal(event){
     /* CEK DUPLIKAT NIS */
 
     if(currentType==="student"){
+        data.photo=window.pendingStudentPhoto||"";
 
         const duplicate=db.students.find(item=>
             item.nis &&
@@ -4763,7 +6664,103 @@ const __LYZZ_renderAll=renderAll;
 renderAll=function(){__LYZZ_renderAll();setTimeout(proDecorate,0)};
 setTimeout(proDecorate,50);
 setInterval(()=>{const active=document.querySelector('.page.active')?.id;if(active==='dashboard'||active==='tugas')proDecorate()},30000);
+
+/* ===== FOTO SISWA + IMPORT EXCEL ===== */
+function studentPhotoMarkup(student){
+    const name=(student.name||"S").trim();
+    const initial=(name.charAt(0)||"S").toUpperCase();
+    if(student.photo){ return `<img class="photo-avatar" src="${esc(student.photo)}" alt="${esc(name)}">`; }
+    return `<div class="photo-avatar photo-placeholder">${esc(initial)}</div>`;
+}
+
+function renderStudents(){
+    const element=document.getElementById("studentsTable"); if(!element)return;
+    const search=(document.getElementById("studentSearch")?.value||"").toLowerCase();
+    const filter=document.getElementById("studentClassFilter")?.value||"";
+    const gender=document.getElementById("studentGenderFilter")?.value||"";
+    const students=db.students.filter(s=>{
+        const q=(s.name||"").toLowerCase().includes(search)||(s.nis||"").toLowerCase().includes(search);
+        return q&&(!filter||s.classId===filter)&&(!gender||s.gender===gender);
+    });
+    if(!students.length){element.innerHTML=empty("Belum ada siswa atau data tidak ditemukan.");return;}
+    element.innerHTML=`<table><thead><tr><th>Foto / Nama</th><th>NIS/NISN</th><th>L/P</th><th>Kelas</th><th>No. HP</th><th>Aksi</th></tr></thead><tbody>${students.map(s=>`<tr>
+      <td><div class="student-name-cell">${studentPhotoMarkup(s)}<button onclick="showStudentCard('${s.id}')"><b>${esc(s.name)}</b><br><small style="color:var(--muted)">Lihat profil</small></button></div></td>
+      <td>${esc(s.nis||"-")}</td><td>${esc(s.gender||"-")}</td><td>${esc(className(s.classId))}</td><td>${esc(s.phone||"-")}</td>
+      <td><button class="btn small" onclick="edit('student','${s.id}')">✏️</button> <button class="btn small danger" onclick="remove('student','${s.id}')">🗑️</button></td>
+    </tr>`).join("")}</tbody></table>`;
+}
+
+function pickStudentPhoto(input){
+    const file=input?.files?.[0]; if(!file)return;
+    if(file.size>2*1024*1024){alert("Ukuran foto maksimal 2 MB.");input.value="";return;}
+    const reader=new FileReader(); reader.onload=e=>{window.pendingStudentPhoto=e.target.result;renderStudentPhotoPreview();}; reader.readAsDataURL(file);
+}
+function removeStudentPhoto(){window.pendingStudentPhoto="";const input=document.getElementById("studentPhotoInput");if(input)input.value="";renderStudentPhotoPreview();}
+function renderStudentPhotoPreview(){
+    const box=document.getElementById("studentPhotoPreview"); if(!box)return;
+    const photo=window.pendingStudentPhoto||"";
+    box.innerHTML=photo?`<img class="photo-avatar" src="${esc(photo)}" alt="Foto">`:`<div class="photo-avatar photo-placeholder">👤</div>`;
+}
+
+function showStudentCard(id){
+    const s=getObject("student",id); if(!s)return;
+    const grades=db.grades.filter(g=>g.studentId===id);
+    const avg=grades.length?grades.reduce((a,g)=>a+Number(g.score||0),0)/grades.length:0;
+    const att=db.attendance.filter(a=>a.studentId===id);
+    const hadir=att.filter(a=>a.status==="Hadir").length;
+    const pct=att.length?Math.round(hadir/att.length*100):0;
+    currentType="studentCard"; editId=null;
+    document.getElementById("modalTitle").textContent="Profil Siswa";
+    document.getElementById("modalForm").innerHTML=`<div style="text-align:center;padding:8px 0 18px">${s.photo?`<img class="photo-avatar large" src="${esc(s.photo)}" alt="Foto">`:`<div class="photo-avatar large photo-placeholder" style="margin:auto">${esc((s.name||"S").charAt(0).toUpperCase())}</div>`}<h2 style="margin:12px 0 4px">${esc(s.name)}</h2><div style="color:var(--muted)">${esc(s.nis||"-")} • ${esc(className(s.classId))}</div></div><div class="kpi"><div class="kpi-box"><b>${avg.toFixed(1)}</b><small>Rata-rata Nilai</small></div><div class="kpi-box"><b>${pct}%</b><small>Kehadiran</small></div><div class="kpi-box"><b>${grades.length}</b><small>Data Nilai</small></div></div><div class="notice" style="margin-top:14px"><strong>Informasi</strong><small>Gender: ${esc(s.gender||"-")}<br>No. HP: ${esc(s.phone||"-")}<br>Catatan: ${esc(s.note||"-")}</small></div><div class="modal-foot"><button type="button" class="btn" onclick="closeModal()">Tutup</button><button type="button" class="btn primary" onclick="closeModal();edit('student','${s.id}')">✏️ Edit Siswa</button></div>`;
+    document.getElementById("modal").classList.add("show");
+}
+
+function normalizeHeader(v){return String(v||"").toLowerCase().trim().replace(/[^a-z0-9]/g,"");}
+function rowValue(row,aliases){const keys=Object.keys(row);const found=keys.find(k=>aliases.includes(normalizeHeader(k)));return found!==undefined?row[found]:"";}
+function importStudentsExcel(event){
+    const file=event.target.files?.[0]; if(!file)return;
+    const ext=file.name.split(".").pop().toLowerCase();
+    if(ext==="csv"){const r=new FileReader();r.onload=()=>processStudentRows(parseCSV(r.result));r.readAsText(file);event.target.value="";return;}
+    if(window.XLSX){readXlsxFile(file,event);return;}
+    const script=document.createElement("script"); script.src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"; script.onload=()=>readXlsxFile(file,event); script.onerror=()=>{alert("Parser Excel belum tersedia. Gunakan CSV atau buka aplikasi saat internet aktif sekali untuk memuat parser Excel.");event.target.value="";}; document.head.appendChild(script);
+}
+function readXlsxFile(file,event){
+    const r=new FileReader(); r.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:"array"});const ws=wb.Sheets[wb.SheetNames[0]];processStudentRows(XLSX.utils.sheet_to_json(ws,{defval:""}));}catch(err){alert("File Excel tidak dapat dibaca: "+err.message);}event.target.value="";}; r.readAsArrayBuffer(file);
+}
+function parseCSV(text){
+    const lines=text.split(/\r?\n/).filter(x=>x.trim()); if(!lines.length)return[];
+    const parseLine=line=>{const out=[];let cur="",q=false;for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'&&line[i+1]==='"'){cur+='"';i++;}else if(c==='"'){q=!q;}else if(c===','&&!q){out.push(cur.trim());cur="";}else cur+=c;}out.push(cur.trim());return out;};
+    const h=parseLine(lines[0]); return lines.slice(1).map(line=>{const a=parseLine(line),o={};h.forEach((k,i)=>o[k]=a[i]??"");return o;});
+}
+function processStudentRows(rows){
+    if(!rows.length){alert("Tidak ada data siswa pada file.");return;}
+    let added=0,updated=0,skipped=0;
+    rows.forEach(row=>{
+        const name=String(rowValue(row,["nama","namasiswa","namalengkap"])).trim();
+        const nis=String(rowValue(row,["nis","nisn","nisnisn","nomorinduk"])).trim();
+        if(!name||!nis){skipped++;return;}
+        let classLabel=String(rowValue(row,["kelas","namakelas","class"])).trim();
+        let cls=db.classes.find(c=>c.name.toLowerCase()===classLabel.toLowerCase());
+        if(classLabel&&!cls){cls={id:uid(),name:classLabel,subject:db.profile.subject||"",room:"",description:""};db.classes.push(cls);}
+        const gender=String(rowValue(row,["gender","jeniskelamin","lp","jk"])).trim().toUpperCase().startsWith("P")?"P":(String(rowValue(row,["gender","jeniskelamin","lp","jk"])).trim().toUpperCase().startsWith("L")?"L":"");
+        const phone=String(rowValue(row,["nohp","nomorhp","hp","telepon","phone"])).trim();
+        const note=String(rowValue(row,["catatan","note","keterangan"])).trim();
+        const photo=String(rowValue(row,["foto","fotourl","photo","photourl"])).trim();
+        const old=db.students.find(s=>s.nis===nis);
+        const data={name,nis,gender,classId:cls?.id||"",phone,note};
+        if(photo) data.photo=photo;
+        if(old){Object.assign(old,data);updated++;}else{db.students.push({id:uid(),createdAt:new Date().toISOString(),...data});added++;}
+    });
+    saveDB(); toast(`Import selesai: ${added} siswa baru, ${updated} diperbarui${skipped?`, ${skipped} dilewati`:""}.`);
+}
+function downloadStudentTemplate(){
+    const rows=[{Nama:"Budi Santoso",NIS_NISN:"123456",Gender:"L",Kelas:"VII A",No_HP:"081234567890",Catatan:"",Foto_URL:""},{Nama:"Siti Aminah",NIS_NISN:"123457",Gender:"P",Kelas:"VII A",No_HP:"",Catatan:"",Foto_URL:""}];
+    if(window.XLSX){const ws=XLSX.utils.json_to_sheet(rows);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Data Siswa");XLSX.writeFile(wb,"Template_Data_Siswa_LYZZ.xlsx");return;}
+    const csv="Nama,NIS_NISN,Gender,Kelas,No_HP,Catatan,Foto_URL\n"+rows.map(r=>Object.values(r).join(",")).join("\n");
+    const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="Template_Data_Siswa_LYZZ.csv";a.click();URL.revokeObjectURL(a.href);
+}
+
 </script>
 
-</body>
-</html>
+
+</body></html>
